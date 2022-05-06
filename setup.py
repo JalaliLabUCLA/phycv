@@ -19,7 +19,7 @@ def install_requires():
     return install_requires
 
 
-VERSION = '0.0.2'
+VERSION = '0.0.3'
 
 # Setting up
 setup(
