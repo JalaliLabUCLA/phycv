@@ -119,7 +119,7 @@ pst_output = pst.run(img_file='./input_imgs/jet_engine.jpeg', phase_strength=0.3
 
 *Example 2*
 
-In Example 2, each step is performed seperately. Finally the output is saved as an attribute of the pst can be accessed by `pst.pst_output`. This is for video processing where different frames need to be loaded but the same kernel applies to all the frames, you can call `init_kernel` only once to save computation time for fixed parameters. The example code can also be found in `test_script2.py`.
+In Example 2, each step is performed seperately. Finally the output is saved as an attribute and can be accessed by `pst.pst_output`. This is for video processing where different frames need to be loaded but the same kernel applies to all the frames, you can call `init_kernel` only once to save computation time for fixed parameters. The example code can also be found in `test_script2.py`.
 
 ```python
 from phycv import PST
@@ -169,7 +169,7 @@ The GPU version of PST significantly accelerates the PST algorithm by operating 
 
 *Example 1*
 
-In Example 1, all steps are performed in a single `run`. In the GPU version, you will need to indicate the `device` when instantiate the class. The result is returned as `pst_output`. Note that the returned result locates on GPU and is in the form of `torch tensor`. You may need to move to cpu and convert to `numpy array` for visualization. This is for users who want to get the result on a single image with indicated PST parameters. The example code can also be found in `test_script1.py`
+In Example 1, all steps are performed in a single `run`. In the GPU version, you will need to indicate the `device` when instantiate the class. The result is returned as `pst_output`. Note that the returned result locates on GPU and is in the form of `torch tensor`. You may need to move to CPU and convert to `numpy array` for visualization. This is for users who want to get the result on a single image with indicated PST parameters. The example code can also be found in `test_script1.py`
 
 ```python
 import torch
@@ -181,7 +181,7 @@ pst_output = pst.run(img_file='./input_imgs/jet_engine.jpeg', phase_strength=0.3
 
 *Example 2*
 
-In Example 2, each step is performed seperately, after  The output is saved as an attribute of the pst can be accessed by `pst.pst_output`. This is for video processing where different frames need to be loaded but the same kernel applies to all the frames, you can call `init_kernel` only once to save computation time for fixed parameters. The example code can also be found in `test_script2.py`.
+In Example 2, each step is performed seperately, after  The output is saved as an attribute and can be accessed by `pst.pst_output`. This is for video processing where different frames need to be loaded but the same kernel applies to all the frames, you can call `init_kernel` only once to save computation time for fixed parameters. The example code can also be found in `test_script2.py`.
 
 ```python
 import torch
@@ -311,13 +311,13 @@ The GPU version of PAGE significantly accelerates the PAGE algorithm by operatin
 
 *Example 1*
 
-In Example 1, all steps are performed in a single `run`. In the GPU version, you will need to indicate the device. The result is returned as pst_output. Note that the returned result locates on GPU and is in the form of `torch tensor`. You may need to move to cpu and convert to `numpy array` for visualization. The result is returned as `page_edge`. This is for users who want to get the result on a single image with indicated PAGE parameters.  The example code can also be found in `test_script1.py`.
+In Example 1, all steps are performed in a single `run`. In the GPU version, you will need to indicate the device. Note that the returned result locates on GPU and is in the form of `torch tensor`. You may need to move to CPU and convert to `numpy array` for visualization. The result is returned as `page_edge`. This is for users who want to get the result on a single image with indicated PAGE parameters.  The example code can also be found in `test_script1.py`.
 
 ```python
 import torch
-from phycv import PAGE
+from phycv import PAGE_GPU
 device = torch.device('cuda')
-page = PAGE(direction_bins=10, device=device)
+page = PAGE_GPU(direction_bins=10, device=device)
 page_edge = page.run(img_file='./input_imgs/jet_engine.jpeg', mu_1=0, mu_2=0.35, sigma_1=0.08, sigma_2=0.7, S1=0.3, S2=0.3, sigma_LPF=0.1, thresh_min=-1, thresh_max=0.0003, morph_flag=1)
 
 ```
@@ -328,9 +328,9 @@ In Example 2, each step is performed seperately, after  The output is saved as a
 
 ```python
 import torch
-from phycv import PAGE
+from phycv import PAGE_GPU
 device = torch.device('cuda')
-page = PAGE(direction_bins=10, device=device)
+page = PAGE_GPU(direction_bins=10, device=device)
 page.load_img(img_file='./input_imgs/jet_engine.jpeg')
 page.init_kernel(mu_1=0, mu_2=0.35, sigma_1=0.08, sigma_2=0.7, S1=0.3, S2=0.3)
 page.apply_kernel(sigma_LPF=0.1, thresh_min=-1, thresh_max=0.0003, morph_flag=1)
