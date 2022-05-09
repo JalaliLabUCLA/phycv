@@ -389,7 +389,7 @@ sigma_LPF = 0.1, thresh_min = -1, thresh_max = 0.002, morph_flag = 1
 ```python
 img_file = 'input_images/wind_rose.png'
 # PAGE parameters
-mu_1 = 0, mu_2 = 0.35, sigma_1 = 0.05, sigma_2 = 0.8, S1 = 0.8, S2 = 0.8
+direction_bins=10, mu_1 = 0, mu_2 = 0.35, sigma_1 = 0.05, sigma_2 = 0.8, S1 = 0.8, S2 = 0.8
 sigma_LPF = 0.1, thresh_min=-1, thresh_max=0.0005, morph_flag = 1
 ```
 <p align="center">
@@ -401,8 +401,8 @@ sigma_LPF = 0.1, thresh_min=-1, thresh_max=0.0005, morph_flag = 1
 ```python
 img_file = 'input_images/sunflower.png'
 # PAGE parameters
-mu_1 = 0, mu_2 = 0.35, sigma_1 = 0.05, sigma_2 = 0.8, S1 = 0.8, S2 = 0.8
-sigma_LPF = 0.05, thresh_min=-1, thresh_max=0.0003, morph_flag = 1
+direction_bins=10, mu_1 = 0, mu_2 = 0.35, sigma_1 = 0.05, sigma_2 = 0.8, S1 = 0.8, S2 = 0.8
+sigma_LPF = 0.05, thresh_min = -1, thresh_max = 0.0003, morph_flag = 1
 ```
 <p align="center">
   <img src="sample_results/sunflower_page.png">
@@ -416,8 +416,8 @@ img_file = 'input_images/jet_engine.jpeg'
 phase_strength = 0.3, warp_strength = 15
 sigma_LPF = 0.15, thresh_min = -0.5, thresh_max = 0.003, morph_flag = 1
 # PAGE Parameters
-mu_1 = 0,mu_2 = 0.2, sigma_1 = 0.05, sigma_2 = 0.6, S1 = 0.5 ,S2 = 0.5
-sigma_LPF = 0.1, thresh_min=-0.5, thresh_max=0.0001, morph_flag = 1
+direction_bins=10, mu_1=0, mu_2 = 0.35, sigma_1 = 0.05, sigma_2 = 0.7, S1 = 0.8 ,S2 = 0.8
+sigma_LPF = 0.08, thresh_min = -1, thresh_max = 0.0004, morph_flag = 1
 ```
 <p align="center">
   <img src="sample_results/jet-engine_pst_page.png">
@@ -430,8 +430,8 @@ img_file = 'input_images/barbara.jpeg'
 phase_strength = 0.8, warp_strength = 15
 sigma_LPF = 0.15, thresh_min = -0.5, thresh_max = 0.003, morph_flag = 1
 # PAGE Parameters
-mu_1 = 0,mu_2 = 0.35, sigma_1 = 0.05, sigma_2 = 0.7, S1 = 0.8 ,S2 = 0.8
-sigma_LPF = 0.08, thresh_min=-1, thresh_max=0.0004, morph_flag = 1
+direction_bins = 30, mu_1 = 0, mu_2 = 0.2, sigma_1 = 0.05, sigma_2 = 0.6, S1 = 0.5, S2 = 0.5
+sigma_LPF = 0.1, thresh_min=-0.5, thresh_max=0.0001, morph_flag = 1
 ```
 <p align="center">
   <img src="sample_results/barbara_pst_page.png">
