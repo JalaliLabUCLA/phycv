@@ -6,7 +6,7 @@ Welcome to PhyCV ! A Physics-inspired Computer Vision Python library developed b
 
     .
     ├── input_images
-    ├      ├── baboon.png
+    ├      ├── cell.png
     ├      ├── barbara.jpeg
     ├      ├── jet_engine.jpeg
     ├      └── ...
@@ -114,7 +114,7 @@ In Example 1, all steps are performed in a single `run`. The result is returned 
 ```python
 from phycv import PST
 pst = PST()
-pst_output = pst.run(img_file='./input_imgs/jet_engine.jpeg', phase_strength=0.3, warp_strength=12, sigma_LPF=0.1, thresh_min=-1, thresh_max=0.0019, morph_flag=1)
+pst_output = pst.run(img_file='./input_images/jet_engine.jpeg', phase_strength=0.3, warp_strength=12, sigma_LPF=0.1, thresh_min=-1, thresh_max=0.0019, morph_flag=1)
 ```
 
 *Example 2*
@@ -124,7 +124,7 @@ In Example 2, each step is performed seperately. Finally the output is saved as 
 ```python
 from phycv import PST
 pst = PST()
-pst.load_img(img_file='./input_imgs/jet_engine.jpeg')
+pst.load_img(img_file='./input_images/jet_engine.jpeg')
 pst.init_kernel(phase_strength=0.3, warp_strength=12)
 pst.apply_kernel(sigma_LPF=0.1, thresh_min=-1, thresh_max=0.0019, morph_flag=1)
 ```
@@ -176,7 +176,7 @@ import torch
 from phycv import PST_GPU
 device = torch.device('cuda')
 pst = PST_GPU(device=device)
-pst_output = pst.run(img_file='./input_imgs/jet_engine.jpeg', phase_strength=0.3, warp_strength=12, sigma_LPF=0.1, thresh_min=-1, thresh_max=0.0019, morph_flag=1)
+pst_output = pst.run(img_file='./input_images/jet_engine.jpeg', phase_strength=0.3, warp_strength=12, sigma_LPF=0.1, thresh_min=-1, thresh_max=0.0019, morph_flag=1)
 ```
 
 *Example 2*
@@ -188,7 +188,7 @@ import torch
 from phycv import PST_GPU
 device = torch.device('cuda')
 pst = PST_GPU(device=device)
-pst.load_img(img_file='./input_imgs/jet_engine.jpeg')
+pst.load_img(img_file='./input_images/jet_engine.jpeg')
 pst.init_kernel(phase_strength=0.3, warp_strength=12)
 pst.apply_kernel(sigma_LPF=0.1, thresh_min=-1, thresh_max=0.0019, morph_flag=1)
 ```
@@ -250,7 +250,7 @@ In Example 1, all steps are performed in a single `run`. The result is returned 
 ```python
 from phycv import PAGE
 page = PAGE(direction_bins=10)
-page_edge = page.run(img_file='./input_imgs/jet_engine.jpeg', mu_1=0, mu_2=0.35, sigma_1=0.08, sigma_2=0.7, S1=0.3, S2=0.3, sigma_LPF=0.1, thresh_min=-1, thresh_max=0.0003, morph_flag=1)
+page_edge = page.run(img_file='./input_images/jet_engine.jpeg', mu_1=0, mu_2=0.35, sigma_1=0.08, sigma_2=0.7, S1=0.3, S2=0.3, sigma_LPF=0.1, thresh_min=-1, thresh_max=0.0003, morph_flag=1)
 
 ```
 
@@ -262,7 +262,7 @@ In Example 2, each step is performed seperately. Finally the output is saved as 
 ```python
 from phycv import PAGE
 page = PAGE(direction_bins=10)
-page.load_img(img_file='./input_imgs/jet_engine.jpeg')
+page.load_img(img_file='./input_images/jet_engine.jpeg')
 page.init_kernel(mu_1=0, mu_2=0.35, sigma_1=0.08, sigma_2=0.7, S1=0.3, S2=0.3)
 page.apply_kernel(sigma_LPF=0.1, thresh_min=-1, thresh_max=0.0003, morph_flag=1)
 page.create_page_edge()
@@ -318,7 +318,7 @@ import torch
 from phycv import PAGE_GPU
 device = torch.device('cuda')
 page = PAGE_GPU(direction_bins=10, device=device)
-page_edge = page.run(img_file='./input_imgs/jet_engine.jpeg', mu_1=0, mu_2=0.35, sigma_1=0.08, sigma_2=0.7, S1=0.3, S2=0.3, sigma_LPF=0.1, thresh_min=-1, thresh_max=0.0003, morph_flag=1)
+page_edge = page.run(img_file='./input_images/jet_engine.jpeg', mu_1=0, mu_2=0.35, sigma_1=0.08, sigma_2=0.7, S1=0.3, S2=0.3, sigma_LPF=0.1, thresh_min=-1, thresh_max=0.0003, morph_flag=1)
 
 ```
 
@@ -331,7 +331,7 @@ import torch
 from phycv import PAGE_GPU
 device = torch.device('cuda')
 page = PAGE_GPU(direction_bins=10, device=device)
-page.load_img(img_file='./input_imgs/jet_engine.jpeg')
+page.load_img(img_file='./input_images/jet_engine.jpeg')
 page.init_kernel(mu_1=0, mu_2=0.35, sigma_1=0.08, sigma_2=0.7, S1=0.3, S2=0.3)
 page.apply_kernel(sigma_LPF=0.1, thresh_min=-1, thresh_max=0.0003, morph_flag=1)
 page.create_page_edge()
@@ -347,16 +347,96 @@ page.create_page_edge()
 
 ## Sample Results
 
-### PST
+### 1. Feature detection in the cell image
 
+```python
+img_file = 'input_images/cell.png'
+# PST Parameters
+phase_strength = 0.5, warp_strength = 20
+sigma_LPF = 0.1, thresh_min = -1, thresh_max = 0.001, morph_flag = 1
+
+```
 <p align="center">
-  <img src="sample_results/jet_engine_pst.png">
+  <img src="sample_results/cell_pst.png">
 </p>
 
-### PAGE
+### 2. Retina vessel detection
+
+```python
+img_file = 'input_images/retina.jpg'
+# PST Parameters
+phase_strength = 10, warp_strength = 90
+sigma_LPF = 0.05, thresh_min = -1, sthresh_max = 0.008, morph_flag = 1
+```
+
 <p align="center">
-  <img src="sample_results/jet_engine_page.png">
+  <img src="sample_results/retina_pst.png">
 </p>
+
+### 3. Edge Dection of a palace image
+
+```python
+img_file = 'input_images/palace.png'
+# PST Parameters
+phase_strength = 0.8, warp_strength = 20
+sigma_LPF = 0.1, thresh_min = -1, thresh_max = 0.002, morph_flag = 1
+```
+<p align="center">
+  <img src="sample_results/palace_pst.png">
+</p>
+
+### 4. Edge detection with orientation for wind rose 
+```python
+img_file = 'input_images/wind_rose.png'
+# PAGE parameters
+mu_1 = 0, mu_2 = 0.35, sigma_1 = 0.05, sigma_2 = 0.8, S1 = 0.8, S2 = 0.8
+sigma_LPF = 0.1, thresh_min=-1, thresh_max=0.0005, morph_flag = 1
+```
+<p align="center">
+  <img src="sample_results/windrose_page.png">
+</p>
+
+
+### 5. Edge detection with orientation for sunflower
+```python
+img_file = 'input_images/sunflower.png'
+# PAGE parameters
+mu_1 = 0, mu_2 = 0.35, sigma_1 = 0.05, sigma_2 = 0.8, S1 = 0.8, S2 = 0.8
+sigma_LPF = 0.05, thresh_min=-1, thresh_max=0.0003, morph_flag = 1
+```
+<p align="center">
+  <img src="sample_results/sunflower_page.png">
+</p>
+
+
+### 6. Comparison of PST and PAGE (I)
+```python
+img_file = 'input_images/jet_engine.jpeg'
+# PST Parameters
+phase_strength = 0.3, warp_strength = 15
+sigma_LPF = 0.15, thresh_min = -0.5, thresh_max = 0.003, morph_flag = 1
+# PAGE Parameters
+mu_1 = 0,mu_2 = 0.2, sigma_1 = 0.05, sigma_2 = 0.6, S1 = 0.5 ,S2 = 0.5
+sigma_LPF = 0.1, thresh_min=-0.5, thresh_max=0.0001, morph_flag = 1
+```
+<p align="center">
+  <img src="sample_results/jet-engine_pst_page.png">
+</p>
+
+### 7. Comparison of PST and PAGE (II)
+```python
+img_file = 'input_images/barbara.jpeg'
+# PST Parameters
+phase_strength = 0.8, warp_strength = 15
+sigma_LPF = 0.15, thresh_min = -0.5, thresh_max = 0.003, morph_flag = 1
+# PAGE Parameters
+mu_1 = 0,mu_2 = 0.35, sigma_1 = 0.05, sigma_2 = 0.7, S1 = 0.8 ,S2 = 0.8
+sigma_LPF = 0.08, thresh_min=-1, thresh_max=0.0004, morph_flag = 1
+```
+<p align="center">
+  <img src="sample_results/barbara_pst_page.png">
+</p>
+
 
 
 ## Reference
