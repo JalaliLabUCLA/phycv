@@ -39,7 +39,7 @@ class PST_GPU:
             else:
                 self.img = mh.imresize(self.img, [self.h, self.w])
             
-            self.img = torch.from_numpy(self.img).to(device)
+            self.img = torch.from_numpy(self.img).to(self.device)
 
 
     def init_kernel(self, phase_strength, warp_strength):

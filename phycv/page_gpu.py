@@ -39,7 +39,7 @@ class PAGE_GPU:
             else:
                 self.img = mh.imresize(self.img, [self.h, self.w])
             
-            self.img = torch.from_numpy(self.img).to(device)
+            self.img = torch.from_numpy(self.img).to(self.device)
 
 
     def init_kernel(self, mu_1, mu_2, sigma_1, sigma_2, S1, S2):
