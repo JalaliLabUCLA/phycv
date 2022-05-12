@@ -174,7 +174,7 @@ In Example 1, all steps are performed in a single `run`. In the GPU version, you
 ```python
 import torch
 from phycv import PST_GPU
-device = torch.device('cuda')
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 pst = PST_GPU(device=device)
 pst_output = pst.run(img_file='./input_images/jet_engine.jpeg', phase_strength=0.3, warp_strength=15, sigma_LPF=0.15, thresh_min=-0.5, thresh_max=0.003, morph_flag=1)
 ```
@@ -186,7 +186,7 @@ In Example 2, each step is performed seperately, after  The output is saved as a
 ```python
 import torch
 from phycv import PST_GPU
-device = torch.device('cuda')
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 pst = PST_GPU(device=device)
 pst.load_img(img_file='./input_images/jet_engine.jpeg')
 pst.init_kernel(phase_strength=0.3, warp_strength=15)
@@ -316,7 +316,7 @@ In Example 1, all steps are performed in a single `run`. In the GPU version, you
 ```python
 import torch
 from phycv import PAGE_GPU
-device = torch.device('cuda')
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 page = PAGE_GPU(direction_bins=10, device=device)
 page_edge = page.run(img_file='./input_images/jet_engine.jpeg', mu_1=0, mu_2=0.35, sigma_1=0.05, sigma_2=0.7, S1=0.8, S2=0.8, sigma_LPF=0.08, thresh_min=-1, thresh_max=0.0004, morph_flag=1)
 
@@ -329,7 +329,7 @@ In Example 2, each step is performed seperately, after  The output is saved as a
 ```python
 import torch
 from phycv import PAGE_GPU
-device = torch.device('cuda')
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 page = PAGE_GPU(direction_bins=10, device=device)
 page.load_img(img_file='./input_images/jet_engine.jpeg')
 page.init_kernel(mu_1=0, mu_2=0.35, sigma_1=0.05, sigma_2=0.7, S1=0.8, S2=0.8)
