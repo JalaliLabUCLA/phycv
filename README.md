@@ -1,6 +1,6 @@
-# PhyCV - A Physics-inspired Computer Vision Library
+# PhyCV - The First Physics-inspired Computer Vision Library
 
-Welcome to PhyCV ! A Physics-inspired Computer Vision Python library developed by Jalali-Lab @ UCLA.
+Welcome to PhyCV ! The First Physics-inspired Computer Vision Python library developed by Jalali-Lab @ UCLA.
 
 **Folder Structure**
 
@@ -50,7 +50,7 @@ Welcome to PhyCV ! A Physics-inspired Computer Vision Python library developed b
 
 
 ## Introduction
-PhyCV is a Physics-inspired Computer Vision Python library. Currently, PhyCV includes Phase-Stretch Transform (PST) and Phase-Stretch Adaptive Gradient-field Extractor (PAGE). Each algorthm has CPU and GPU versions.
+PhyCV is a Physics-inspired Computer Vision Python library. PhyCV has a new class of computer vision algorithms that emulates the propagation of light through a physical medium with natural and engineered diffractive properties followed by coherent detection. Unlike traditional algorithms that are a sequence of hand-crafted empirical rules, physics-inspired algorithms leverage physical laws of nature as blueprints. These algorithms can, in principle, be implemented in real physical devices for fast and efficient computation.  Currently, PhyCV includes Phase-Stretch Transform (PST) and Phase-Stretch Adaptive Gradient-field Extractor (PAGE). Each algorthm has CPU and GPU versions.
 
 ## Installation
 The GPU versions depend on `PyTorch`, make sure that you have `CUDA` setup before the installation. 
