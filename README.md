@@ -347,12 +347,15 @@ page.create_page_edge()
 
 
 ## Sample Results
+In this section, we provide sample results by running the algorithms in PhyCV on images in the `input_image` folder. The parameters to reproduce the results are also attached. 
+
+**Note**: the results from CPU and GPU version may look slightly different, because the morphological operation at the end is implemented using different image processing packages (`mahotas` for CPU version and `kornia` for GPU version). The CPU version will lead to thinner output. You can always set the `morph_flag=0` and add customized morphological operation later on. 
 
 ### 1. Feature detection in the cell image
 
 ```python
 img_file = 'input_images/cell.png'
-# PST Parameters
+# PST_GPU Parameters
 phase_strength = 0.5, warp_strength = 20
 sigma_LPF = 0.1, thresh_min = -1, thresh_max = 0.001, morph_flag = 1
 
@@ -365,7 +368,7 @@ sigma_LPF = 0.1, thresh_min = -1, thresh_max = 0.001, morph_flag = 1
 
 ```python
 img_file = 'input_images/retina.jpg'
-# PST Parameters
+# PST_GPU Parameters
 phase_strength = 10, warp_strength = 90
 sigma_LPF = 0.05, thresh_min = -1, sthresh_max = 0.008, morph_flag = 1
 ```
@@ -378,7 +381,7 @@ sigma_LPF = 0.05, thresh_min = -1, sthresh_max = 0.008, morph_flag = 1
 
 ```python
 img_file = 'input_images/palace.png'
-# PST Parameters
+# PST_GPU Parameters
 phase_strength = 0.8, warp_strength = 20
 sigma_LPF = 0.1, thresh_min = -1, thresh_max = 0.002, morph_flag = 1
 ```
@@ -389,7 +392,7 @@ sigma_LPF = 0.1, thresh_min = -1, thresh_max = 0.002, morph_flag = 1
 ### 4. Edge detection with orientation for wind rose 
 ```python
 img_file = 'input_images/wind_rose.png'
-# PAGE parameters
+# PAGE_GPU parameters
 direction_bins=10, mu_1 = 0, mu_2 = 0.35, sigma_1 = 0.05, sigma_2 = 0.8, S1 = 0.8, S2 = 0.8
 sigma_LPF = 0.1, thresh_min=-1, thresh_max=0.0005, morph_flag = 1
 ```
@@ -401,7 +404,7 @@ sigma_LPF = 0.1, thresh_min=-1, thresh_max=0.0005, morph_flag = 1
 ### 5. Edge detection with orientation for sunflower
 ```python
 img_file = 'input_images/sunflower.jpg'
-# PAGE parameters
+# PAGE_GPU parameters
 direction_bins=10, mu_1 = 0, mu_2 = 0.35, sigma_1 = 0.05, sigma_2 = 0.8, S1 = 0.8, S2 = 0.8
 sigma_LPF = 0.05, thresh_min = -1, thresh_max = 0.0003, morph_flag = 1
 ```
@@ -413,10 +416,10 @@ sigma_LPF = 0.05, thresh_min = -1, thresh_max = 0.0003, morph_flag = 1
 ### 6. Comparison of PST and PAGE (I)
 ```python
 img_file = 'input_images/jet_engine.jpeg'
-# PST Parameters
+# PST_GPU Parameters
 phase_strength = 0.3, warp_strength = 15
 sigma_LPF = 0.15, thresh_min = -0.5, thresh_max = 0.003, morph_flag = 1
-# PAGE Parameters
+# PAGE_GPU Parameters
 direction_bins=10, mu_1=0, mu_2 = 0.35, sigma_1 = 0.05, sigma_2 = 0.7, S1 = 0.8 ,S2 = 0.8
 sigma_LPF = 0.08, thresh_min = -1, thresh_max = 0.0004, morph_flag = 1
 ```
