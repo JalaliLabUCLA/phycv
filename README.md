@@ -2,33 +2,22 @@
 
 Welcome to PhyCV ! The First Physics-inspired Computer Vision Python library developed by Jalali-Lab @ UCLA.
 
-**Folder Structure**
 
-    .
-    ├── input_images
-    ├      ├── cell.png
-    ├      ├── barbara.jpeg
-    ├      ├── jet_engine.jpeg
-    ├      └── ...
-    ├     
-    ├── phycv
-    ├      ├── __init__.py
-    ├      ├── pst.py
-    ├      ├── pst_gpu.py
-    ├      ├── page.py
-    ├      ├── page_gpu.py
-    ├      └── utils.py        
-    ├
-    ├── test_script1.py                
-    ├── test_script2.py
-    ├── requirements.txt                   
-    ├── LICENSE
-    ├── README.md
-    └── setup.py 
+### *Release Notes*
+
+- **Version 1.1.0**
+
+  The `load_img` method now supports loading images from both an image files and image arrays.
+
+- **Version 1.0.0**
+  
+  The first release of PhyCV is available!
 
 
 ## Contents
 - [Introduction](#introduction)
+
+- [Folder Structure](#folder-structure)
 
 - [Installation](#installation)
 
@@ -51,6 +40,29 @@ Welcome to PhyCV ! The First Physics-inspired Computer Vision Python library dev
 
 ## Introduction
 PhyCV is a Physics-inspired Computer Vision Python library. PhyCV has a new class of computer vision algorithms that emulates the propagation of light through a physical medium with natural and engineered diffractive properties followed by coherent detection. Unlike traditional algorithms that are a sequence of hand-crafted empirical rules, physics-inspired algorithms leverage physical laws of nature as blueprints. These algorithms can, in principle, be implemented in real physical devices for fast and efficient computation.  Currently, PhyCV includes Phase-Stretch Transform (PST) and Phase-Stretch Adaptive Gradient-field Extractor (PAGE). Each algorthm has CPU and GPU versions.
+
+## Folder Structure
+    .
+    ├── input_images
+    ├      ├── cell.png
+    ├      ├── barbara.jpeg
+    ├      ├── jet_engine.jpeg
+    ├      └── ...
+    ├     
+    ├── phycv
+    ├      ├── __init__.py
+    ├      ├── pst.py
+    ├      ├── pst_gpu.py
+    ├      ├── page.py
+    ├      ├── page_gpu.py
+    ├      └── utils.py        
+    ├
+    ├── test_script1.py                
+    ├── test_script2.py
+    ├── requirements.txt                   
+    ├── LICENSE
+    ├── README.md
+    └── setup.py 
 
 ## Installation
 The GPU versions depend on `PyTorch`, make sure that you have `CUDA` setup before the installation. 
@@ -85,7 +97,7 @@ pip install .
 class PST:
     def __init__(self, h=None, w=None):
 
-    def load_img(self, img_file):
+    def load_img(self, img_file=None, img_array=None):
 
     def init_kernel(self, phase_strength, warp_strength):
     
@@ -97,7 +109,7 @@ class PST:
 ```
 - The `__init__` method has two parameters `h` (height) and `w` (width), which indicates the size of image the algorithm will operate on. They are set to `None` by default. If you leave them as `None` by default, their value will be determined when calling the following `load_img` method. 
 
-- The `load_img` method first loads the image according to the parameter `img_file`, then it converts the image to greyscale if it is in RGB format, if `h` and `w` are not indicated in the `__init__` method, they will be determined by the shape of the image. Otherwise, the image will be reshaped to the indicated size.
+- The `load_img` method can load the image from either an image file indicated by `img_file` or an image array indicated by `img_array`. Then it converts the image to greyscale if it is in RGB format, if `h` and `w` are not indicated in the `__init__` method, they will be determined by the shape of the image. Otherwise, the image will be reshaped to the indicated size.
 
 - The `init_kernel` method initializes the PST kernel according to the parameters `phase_strength` and `warp_strength`. As for the derivation of the kernel and the physical meaning of parameters, please refer to reference [3], [4].
 
@@ -119,7 +131,7 @@ pst_output = pst.run(img_file='./input_images/jet_engine.jpeg', phase_strength=0
 
 *Example 2*
 
-In Example 2, each step is performed seperately. Finally the output is saved as an attribute and can be accessed by `pst.pst_output`. This is for video processing where different frames need to be loaded but the same kernel applies to all the frames, you can call `init_kernel` only once to save computation time for fixed parameters. The example code can also be found in `test_script2.py`.
+In Example 2, each step is performed seperately. Finally the output is saved as an attribute and can be accessed by `pst.pst_output`. This is for video processing where different frames need to be loaded but the same kernel applies to all the frames, you can call `init_kernel` only once to save computation time for fixed parameters. The example code can also be found in `test_script2.py`. Note that for real-time video processing, the frames are usually pre-loaded or captured as image arrays before running PhyCV algorithms. Under these circumstances, you can indicate the `img_array` instead of `img_file` when calling the `load_img` method. 
 
 ```python
 from phycv import PST
@@ -149,7 +161,7 @@ pst.apply_kernel(sigma_LPF=0.15, thresh_min=-0.5, thresh_max=0.003, morph_flag=1
 class PST_GPU:
     def __init__(self, device, h=None, w=None):
 
-    def load_img(self, img_file):
+    def load_img(self, img_file=None, img_array=None):
     
     def init_kernel(self, phase_strength, warp_strength):
 
@@ -217,7 +229,7 @@ pst.apply_kernel(sigma_LPF=0.15, thresh_min=-0.5, thresh_max=0.003, morph_flag=1
 class PAGE:
     def __init__(self,direction_bins, h=None, w=None):
 
-    def load_img(self, img_file):
+    def load_img(self, img_file=None, img_array=None):
 
     def init_kernel(self, mu_1, mu_2, sigma_1, sigma_2, S1, S2):
     
@@ -231,7 +243,7 @@ class PAGE:
 
 - To instantiate a `PAGE` class, three parameters `h` (height), `w` (width), and `direction_bins` are needed. `h` and `w` are set to `None` by default. If you leave them as `None` by default, their value will be determined when calling the following `load_img` method. 
 
-- The `load_img` method first loads the image according to the parameter `img_file`, then it converts the image to greyscale if it is in RGB format, if `h` and `w` are not indicated in the `__init__` method, they will be determined by the shape of the image. Otherwise, the image will be reshaped to the indicated size.
+- The `load_img` method can load the image from either an image file indicated by `img_file` or an image array indicated by `img_array`. Then it converts the image to greyscale if it is in RGB format, if `h` and `w` are not indicated in the `__init__` method, they will be determined by the shape of the image. Otherwise, the image will be reshaped to the indicated size.
 
 - The `init_kernel` method initializes the PAGE kernel according to the parameters `mu_1`, `mu_2`, `sigma_1`, `sigma_2`, `S1`, `S2`. In the CPU version, kernels for different frequency bins are initialized in serial. As for the derivation of the kernel and the physical meaning of parameters, please refer to references [9], [10].
 
@@ -287,7 +299,7 @@ page.create_page_edge()
 class PAGE_GPU:
     def __init__(self, direction_bins, device, h=None, w=None):
 
-    def load_img(self, img_file):
+    def load_img(self, img_file=None, img_array=None):
 
     def init_kernel(self, mu_1, mu_2, sigma_1, sigma_2, S1, S2):
     
