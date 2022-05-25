@@ -9,9 +9,13 @@ class PAGE:
         self.direction_bins = direction_bins
     
     
-    def load_img(self, img_file):
-        # load the image from the image file
-        self.img = mh.imread(img_file)
+    def load_img(self, img_file=None, img_array=None):
+        if img_array is not None:
+            # directly load the image from numpy array
+            self.img = img_array
+        else:
+            # load the image from the image file
+            self.img = mh.imread(img_file)
         # convert to grayscale if it is RGB
         if self.img.ndim == 3:
             self.img = mh.colors.rgb2grey(self.img)
@@ -95,7 +99,7 @@ class PAGE:
 
     def run(self, img_file, mu_1, mu_2, sigma_1, sigma_2, S1, S2, sigma_LPF, thresh_min, thresh_max, morph_flag):
         # wrap load_img, init_kernel, apply_kernel, create_page_edge in one run
-        self.load_img(img_file)
+        self.load_img(img_file=img_file)
         self.init_kernel(mu_1, mu_2, sigma_1, sigma_2, S1, S2)
         self.apply_kernel(sigma_LPF, thresh_min, thresh_max, morph_flag)
         self.create_page_edge()

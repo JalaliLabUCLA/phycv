@@ -6,11 +6,14 @@ class PST:
     def __init__(self, h=None, w=None):
         self.h = h
         self.w = w
-    
-
-    def load_img(self, img_file):
-        # load the image from the image file
-        self.img = mh.imread(img_file)
+        
+    def load_img(self, img_file=None, img_array=None):
+        if img_array is not None:
+            # directly load the image from numpy array
+            self.img = img_array
+        else:
+            # load the image from the image file
+            self.img = mh.imread(img_file)
         # convert to grayscale if it is RGB
         if self.img.ndim == 3:
             self.img = mh.colors.rgb2grey(self.img)
@@ -50,7 +53,7 @@ class PST:
 
     def run(self, img_file, phase_strength, warp_strength, sigma_LPF, thresh_min, thresh_max, morph_flag):
         # wrap load_img, init_kernel, apply_kernel in one run
-        self.load_img(img_file)
+        self.load_img(img_file=img_file)
         self.init_kernel(phase_strength, warp_strength)
         self.apply_kernel(sigma_LPF, thresh_min, thresh_max, morph_flag)
 

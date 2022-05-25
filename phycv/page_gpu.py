@@ -12,11 +12,11 @@ class PAGE_GPU:
         self.direction_bins = direction_bins
         self.device = device
 
-    def load_img(self, img_file):
-        # load the image from the image file
-        # torchvision read_image only supports 'jpg' and 'png'
-        if img_file.split('.')[-1] in ['jpg', 'png', 'jpeg']:
-            self.img = torchvision.io.read_image(img_file).to(self.device)
+    def load_img(self, img_file=None, img_array=None):
+        if img_array is not None:
+            # directly load the image from the array instead of the file
+            # this is for the use case of video processing where all the frames are loaded
+            self.img = img_array.to(self.device)
             # convert to grayscale if it is RGB
             if self.img.dim() == 3 and self.img.shape[0]!=1:
                 self.img = rgb_to_grayscale(self.img)
@@ -27,19 +27,35 @@ class PAGE_GPU:
                 self.w = self.img.shape[1]
             else:
                 self.img = torch.squeeze(resize(self.img, [self.h, self.w]))
-        
+
         else:
-            # use mahotas to load other format of image
-            self.img = mh.imread(img_file)
-            if self.img.ndim == 3:
-                self.img = mh.colors.rgb2grey(self.img)
-            if not self.h and not self.w:
-                self.h = self.img.shape[0]
-                self.w = self.img.shape[1]
-            else:
-                self.img = mh.imresize(self.img, [self.h, self.w])
+            # load the image from the image file
+            # torchvision read_image only supports 'jpg' and 'png'
+            if img_file.split('.')[-1] in ['jpg', 'png', 'jpeg']:
+                self.img = torchvision.io.read_image(img_file).to(self.device)
+                # convert to grayscale if it is RGB
+                if self.img.dim() == 3 and self.img.shape[0]!=1:
+                    self.img = rgb_to_grayscale(self.img)
+                # read the image size or resize to the indicated size (height x width)
+                if not self.h and not self.w:
+                    self.img = torch.squeeze(self.img)
+                    self.h = self.img.shape[0]
+                    self.w = self.img.shape[1]
+                else:
+                    self.img = torch.squeeze(resize(self.img, [self.h, self.w]))
             
-            self.img = torch.from_numpy(self.img).to(self.device)
+            else:
+                # use mahotas to load other format of image
+                self.img = mh.imread(img_file)
+                if self.img.ndim == 3:
+                    self.img = mh.colors.rgb2grey(self.img)
+                if not self.h and not self.w:
+                    self.h = self.img.shape[0]
+                    self.w = self.img.shape[1]
+                else:
+                    self.img = mh.imresize(self.img, [self.h, self.w])
+                
+                self.img = torch.from_numpy(self.img).to(self.device)
 
 
     def init_kernel(self, mu_1, mu_2, sigma_1, sigma_2, S1, S2):
@@ -54,7 +70,7 @@ class PAGE_GPU:
         # set the frequency grid
         u = torch.linspace(-0.5, 0.5, self.h, device=self.device).float()
         v = torch.linspace(-0.5, 0.5, self.w, device=self.device).float()
-        [U, V] = (torch.meshgrid(u, v))
+        [U, V] = (torch.meshgrid(u, v, indexing='ij'))
         [self.THETA, self.RHO] = cart2pol_torch(U, V)
 
         min_direction = np.pi/180
@@ -109,7 +125,7 @@ class PAGE_GPU:
 
     def run(self, img_file, mu_1, mu_2, sigma_1, sigma_2, S1, S2, sigma_LPF, thresh_min, thresh_max, morph_flag):
         # wrap load_img, init_kernel, apply_kernel, create_page_edge in one run
-        self.load_img(img_file)
+        self.load_img(img_file=img_file)
         self.init_kernel(mu_1, mu_2, sigma_1, sigma_2, S1, S2)
         self.apply_kernel(sigma_LPF, thresh_min, thresh_max, morph_flag)
         self.create_page_edge()
