@@ -17,7 +17,7 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 # run PST CPU version
 pst = PST()
-pst.load_img(img_file)
+pst.load_img(img_file=img_file)
 pst.init_kernel(phase_strength=0.3, warp_strength=15)
 pst.apply_kernel(sigma_LPF=0.15, thresh_min=-0.5, thresh_max=0.003, morph_flag=1)
 figure1 = plt.figure(1)
@@ -26,7 +26,7 @@ plt.imshow(pst.pst_output, cmap='gray')
 
 # run PST GPU version
 pst = PST_GPU(device=device)
-pst.load_img(img_file)
+pst.load_img(img_file=img_file)
 pst.init_kernel(phase_strength=0.3, warp_strength=15)
 pst.apply_kernel(sigma_LPF=0.15, thresh_min=-0.5, thresh_max=0.003, morph_flag=1)
 figure2 = plt.figure(2)
@@ -35,7 +35,7 @@ plt.imshow(pst.pst_output.cpu().numpy(), cmap='gray')
 
 # run PAGE CPU version
 page = PAGE(direction_bins=10)
-page.load_img(img_file)
+page.load_img(img_file=img_file)
 page.init_kernel(mu_1=0, mu_2=0.35, sigma_1=0.05, sigma_2=0.7, S1=0.8, S2=0.8)
 page.apply_kernel(sigma_LPF=0.08, thresh_min=-1, thresh_max=0.0004, morph_flag=1)
 page.create_page_edge()
@@ -45,7 +45,7 @@ plt.imshow(page.page_edge)
 
 # run PAGE GPU version
 page = PAGE_GPU(direction_bins=10, device=device)
-page.load_img(img_file)
+page.load_img(img_file=img_file)
 page.init_kernel(mu_1=0, mu_2=0.35, sigma_1=0.05, sigma_2=0.7, S1=0.8, S2=0.8)
 page.apply_kernel(sigma_LPF=0.08, thresh_min=-1, thresh_max=0.0004, morph_flag=1)
 page.create_page_edge()
