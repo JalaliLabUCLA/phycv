@@ -19,7 +19,7 @@ def install_requires():
     return install_requires
 
 
-VERSION = '1.1.0'
+VERSION = '1.1.1'
 
 # Setting up
 setup(

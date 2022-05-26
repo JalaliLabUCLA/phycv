@@ -5,6 +5,10 @@ Welcome to PhyCV ! The First Physics-inspired Computer Vision Python library dev
 
 ### *Release Notes*
 
+- **Version 1.1.1**
+
+  Fix minor bugs in `page_create_edge`.
+
 - **Version 1.1.0**
 
   The `load_img` method now supports loading images from both an image files and image arrays.
