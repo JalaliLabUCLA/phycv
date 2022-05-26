@@ -88,7 +88,8 @@ class PAGE:
         weight_step = 255*3/self.direction_bins
         color_weight = np.arange(0, 255, weight_step)
         self.page_edge = np.zeros([self.h, self.w, 3])
-        step_edge = int(round(self.direction_bins/3))
+        #step_edge = int(round(self.direction_bins/3))
+        step_edge = self.direction_bins//3
         for i in range(step_edge):
             self.page_edge[:,:,0] = color_weight[i] * self.page_output[:,:,i] + self.page_edge[:,:,0]
             self.page_edge[:,:,1] = color_weight[i] * self.page_output[:,:,i+step_edge] + self.page_edge[:,:,1]
