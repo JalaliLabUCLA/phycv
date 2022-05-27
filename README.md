@@ -1,6 +1,6 @@
 # PhyCV - The First Physics-inspired Computer Vision Library
 
-Welcome to PhyCV ! The First Physics-inspired Computer Vision Python library developed by Jalali-Lab @ UCLA.
+Welcome to [PhyCV](https://en.wikipedia.org/wiki/PhyCV) ! The First Physics-inspired Computer Vision Python library developed by Jalali-Lab @ UCLA.
 
 
 ### *Release Notes*
