@@ -405,7 +405,7 @@ sigma_LPF = 0.1, thresh_min = -1, thresh_max = 0.002, morph_flag = 1
   <img src="sample_results/palace_pst.png">
 </p>
 
-### 4. Edge detection with orientation for wind rose 
+### 4. Directional edge detection of a wind rose 
 ```python
 img_file = 'input_images/wind_rose.png'
 # PAGE_GPU parameters
@@ -417,7 +417,7 @@ sigma_LPF = 0.1, thresh_min=-1, thresh_max=0.0005, morph_flag = 1
 </p>
 
 
-### 5. Edge detection with orientation for sunflower
+### 5. Directional edge detection of a sunflower
 ```python
 img_file = 'input_images/sunflower.jpg'
 # PAGE_GPU parameters
@@ -429,7 +429,7 @@ sigma_LPF = 0.05, thresh_min = -1, thresh_max = 0.0003, morph_flag = 1
 </p>
 
 
-### 6. Comparison of PST and PAGE (I)
+### 6. Comparison of edge detection with and without orientation (I)
 ```python
 img_file = 'input_images/jet_engine.jpeg'
 # PST_GPU Parameters
@@ -443,7 +443,7 @@ sigma_LPF = 0.08, thresh_min = -1, thresh_max = 0.0004, morph_flag = 1
   <img src="sample_results/jet-engine_pst_page.png">
 </p>
 
-### 7. Comparison of PST and PAGE (II)
+### 7. Comparison of edge detection with and without orientation (II)
 ```python
 img_file = 'input_images/barbara.jpeg'
 # PST Parameters
