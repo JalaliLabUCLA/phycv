@@ -21,7 +21,7 @@ pst.load_img(img_file=img_file)
 pst.init_kernel(phase_strength=0.3, warp_strength=15)
 pst.apply_kernel(sigma_LPF=0.15, thresh_min=-0.5, thresh_max=0.003, morph_flag=1)
 figure1 = plt.figure(1)
-plt.title('PST CPU')
+plt.title('PhyCV Edge Detection (CPU version)')
 plt.imshow(pst.pst_output, cmap='gray')
 
 # run PST GPU version
@@ -30,7 +30,7 @@ pst.load_img(img_file=img_file)
 pst.init_kernel(phase_strength=0.3, warp_strength=15)
 pst.apply_kernel(sigma_LPF=0.15, thresh_min=-0.5, thresh_max=0.003, morph_flag=1)
 figure2 = plt.figure(2)
-plt.title('PST GPU')
+plt.title('PhyCV Edge Detection (GPU version)')
 plt.imshow(pst.pst_output.cpu().numpy(), cmap='gray')
 
 # run PAGE CPU version
@@ -40,7 +40,7 @@ page.init_kernel(mu_1=0, mu_2=0.35, sigma_1=0.05, sigma_2=0.7, S1=0.8, S2=0.8)
 page.apply_kernel(sigma_LPF=0.08, thresh_min=-1, thresh_max=0.0004, morph_flag=1)
 page.create_page_edge()
 figure3 = plt.figure(3)
-plt.title('PAGE CPU')
+plt.title('PhyCV Directional Edge Detection (CPU version)')
 plt.imshow(page.page_edge)
 
 # run PAGE GPU version
@@ -50,7 +50,7 @@ page.init_kernel(mu_1=0, mu_2=0.35, sigma_1=0.05, sigma_2=0.7, S1=0.8, S2=0.8)
 page.apply_kernel(sigma_LPF=0.08, thresh_min=-1, thresh_max=0.0004, morph_flag=1)
 page.create_page_edge()
 figure4 = plt.figure(4)
-plt.title('PAGE GPU')
+plt.title('PhyCV Directional Edge Detection (GPU version)')
 plt.imshow(page.page_edge.cpu().numpy())
 
 plt.show()
