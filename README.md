@@ -1,4 +1,7 @@
-# PhyCV - The First Physics-inspired Computer Vision Library
+<p align="center">
+  <img src="asset/phycv_badge.png">
+</p>
+
 
 [![Wikipedia](https://img.shields.io/badge/Wikipedia-%23000000.svg?style=for-the-badge&logo=wikipedia&logoColor=white)](https://en.wikipedia.org/wiki/PhyCV)
 [![YouTube](https://img.shields.io/badge/YouTube-%23FF0000.svg?style=for-the-badge&logo=YouTube&logoColor=white)](https://www.youtube.com/playlist?list=PLj--iTBXPaTWABQstUFA6l6_Rf3uiZq9T)
