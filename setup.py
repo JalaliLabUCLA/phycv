@@ -1,17 +1,19 @@
-'''
+"""
 This is for building the PhyCV library.
 Without building the library, you have to have the code in a specific directory to run all the algorithms
 After building it, PhyCV will appear as a Python package in your Python environment.
 If you are installing PhyCV from pip, you don't need setup.py
 
-'''
+"""
 
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
+
 
 def readme():
-    with open('README.md', "r") as f:
+    with open("README.md", "r") as f:
         README = f.read()
     return README
+
 
 def install_requires():
     with open("requirements.txt", "r") as f:
@@ -19,7 +21,7 @@ def install_requires():
     return install_requires
 
 
-VERSION = '1.1.1'
+VERSION = "1.2.0"
 
 # Setting up
 setup(
@@ -32,7 +34,13 @@ setup(
     long_description_content_type="text/markdown",
     packages=find_packages(),
     install_requires=install_requires(),
-    keywords=['python', 'image processing', 'computational imaging','computer vision', 'physics-inspired algorithm'],
+    keywords=[
+        "python",
+        "image processing",
+        "computational imaging",
+        "computer vision",
+        "physics-inspired algorithm",
+    ],
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Intended Audience :: Developers",
@@ -41,5 +49,5 @@ setup(
         "Operating System :: Unix",
         "Operating System :: MacOS :: MacOS X",
         "Operating System :: Microsoft :: Windows",
-    ]
+    ],
 )
