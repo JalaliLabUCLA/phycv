@@ -9,6 +9,10 @@ Welcome to PhyCV ! The First Physics-inspired Computer Vision Python library dev
 
 ### *Release Notes*
 
+* **Version 1.2.1**
+
+  Minor improvements for loading images.
+
 * **Version 1.2.0**
 
   We release VEViD, an efficient algorithm for both low-light enhancement and color enhancement! We also significantly improved the document and code!

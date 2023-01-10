@@ -26,11 +26,14 @@ class PST_GPU:
 
         Args:
             img_file (str, optional): path to the image. Defaults to None.
-            img_array (np.ndarray, optional): image in the form of np.ndarray. Defaults to None.
+            img_array (torch.Tensor, optional): image in the form of torch.Tensor. Defaults to None.
         """
         if img_array is not None:
             # directly load the image from the array instead of the file
-            self.img = img_array.to(self.device)
+            if img_array.get_device() == self.device:
+                self.img = img_array
+            else:    
+                self.img = img_array.to(self.device)            
             # convert to grayscale if it is RGB
             if self.img.dim() == 3 and self.img.shape[0] != 1:
                 self.img = rgb_to_grayscale(self.img)

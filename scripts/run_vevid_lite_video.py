@@ -39,6 +39,7 @@ def main():
 
     for i in range(length):
         frame = torch.permute(vid_frames[i], (2, 0, 1)) / 255.0
+        frame = frame.to(device)
         vevid.load_img(img_array=frame)
         vevid.apply_kernel(b, G, lite=True)
         vevid_out_vid[i] = vevid.vevid_output.cpu().numpy()

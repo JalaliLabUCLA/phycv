@@ -21,7 +21,7 @@ def install_requires():
     return install_requires
 
 
-VERSION = "1.2.0"
+VERSION = "1.2.1"
 
 # Setting up
 setup(

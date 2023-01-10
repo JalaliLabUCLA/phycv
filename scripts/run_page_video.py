@@ -45,7 +45,7 @@ def main():
     # run PAGE for each frame
     for i in range(length):
         frame = torch.permute(vid_frames[i], (2, 0, 1))
-
+        frame = frame.to(device)
         # if it is the first frame, we have to initialized the kernel
         if i == 0:
             page = PAGE_GPU(direction_bins=10, device=device)
