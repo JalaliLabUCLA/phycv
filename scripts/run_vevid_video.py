@@ -40,6 +40,7 @@ def main():
     # run VEViD for each frame
     for i in range(length):
         frame = torch.permute(vid_frames[i], (2, 0, 1)) / 255.0
+        frame = frame.to(device)
         # if it is the first frame, we have to initialized the kernel
         if i == 0:
             vevid = VEVID_GPU(device=device)
