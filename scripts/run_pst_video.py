@@ -55,10 +55,6 @@ def main():
         pst_out_vid[i] = pst.pst_output.cpu().numpy()
 
     print("create video...")
-    output_path = "./output/PST/"
-    if not os.path.exists(output_path):
-        os.makedirs(output_path)
-
     # save the results for each frame
     concat_frames = []
     for i in range(length):
@@ -68,7 +64,7 @@ def main():
         concat_frame = np.concatenate((raw_frame, pst_frame), 1)
         concat_frames.append(concat_frame)
 
-    iio.imwrite("output/PST_video_demo.gif", concat_frames)
+    iio.imwrite("output/PST_video_demo.mp4", concat_frames, fps=20)
 
 
 if __name__ == "__main__":

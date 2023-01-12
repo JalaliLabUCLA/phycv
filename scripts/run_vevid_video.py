@@ -53,10 +53,6 @@ def main():
         vevid_out_vid[i] = vevid.vevid_output.cpu().numpy()
 
     print("create video...")
-    output_path = "./output/VEViD/"
-    if not os.path.exists(output_path):
-        os.makedirs(output_path)
-
     # save the results for each frame
     concat_frames = []
     for i in range(length):

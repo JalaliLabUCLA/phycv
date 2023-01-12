@@ -61,10 +61,6 @@ def main():
         page_out_vid[i] = page.page_edge.cpu().numpy()
 
     print("create video...")
-    output_path = "./output/PAGE/"
-    if not os.path.exists(output_path):
-        os.makedirs(output_path)
-
     # save the results for each frame
     concat_frames = []
     for i in range(length):
