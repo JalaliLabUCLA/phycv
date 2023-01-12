@@ -7,8 +7,7 @@ For fixed kernel, we only need to initialize the kernel once for the first frame
 
 import os
 
-import imageio
-import matplotlib.pyplot as plt
+import imageio.v3 as iio
 import numpy as np
 import torch
 import torchvision
@@ -34,7 +33,6 @@ def main():
     T = 0.002
     b = 0.5
     G = 0.6
-
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     # run VEViD for each frame
@@ -51,31 +49,20 @@ def main():
         else:
             vevid.load_img(img_array=frame)
             vevid.apply_kernel(b, G)
-
+        # save output into the array
         vevid_out_vid[i] = vevid.vevid_output.cpu().numpy()
 
     print("create video...")
-    output_path = "./output/VEViD/"
-    if not os.path.exists(output_path):
-        os.makedirs(output_path)
     # save the results for each frame
+    concat_frames = []
     for i in range(length):
-        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(20, 16))
-        ax1.imshow(vid_frames[i])
-        ax1.axis("off")
-        ax1.set_title("Original Video Frame", fontsize=16)
-        ax2.imshow(np.transpose(vevid_out_vid[i], (1, 2, 0)))
-        ax2.axis("off")
-        ax2.set_title("Real-time Low-Light Enhancement by PhyCV", fontsize=18)
-        idx = (4 - len(str(i))) * "0" + str(i)
-        plt.savefig(os.path.join(output_path, f"{idx}.jpg"), bbox_inches="tight")
-        plt.close()
+        raw_frame = vid_frames[i].numpy()
+        vevid_frame = (np.transpose(vevid_out_vid[i], (1, 2, 0)) * 255).astype(np.uint8)
+        concat_frame = np.concatenate((raw_frame, vevid_frame), 1)
+        concat_frames.append(concat_frame)
 
     # create video from the processed frames
-    with imageio.get_writer("./output/VEViD_demo.mp4", fps=25) as writer:
-        for filename in sorted(os.listdir(output_path)):
-            image = imageio.imread(output_path + filename)
-            writer.append_data(image)
+    iio.imwrite("output/VEViD_video_demo.mp4", concat_frames, fps=20)
 
 
 if __name__ == "__main__":
