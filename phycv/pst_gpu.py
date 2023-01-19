@@ -5,7 +5,7 @@ from torch.fft import fft2, fftshift, ifft2
 from torchvision.io import read_image
 from torchvision.transforms.functional import resize, rgb_to_grayscale
 
-from .utils import cart2pol_torch, denoise_torch, morph_torch
+from .utils import normalize, cart2pol_torch, denoise_torch, morph_torch
 
 
 class PST_GPU:
@@ -108,20 +108,16 @@ class PST_GPU:
         self.img_pst = ifft2(
             fft2(self.img_denoised) * fftshift(torch.exp(-1j * self.pst_kernel))
         )
-        self.pst_feature = torch.angle(self.img_pst)
+        self.pst_feature = normalize(torch.angle(self.img_pst))
         # apply morphological operation if applicable
         if morph_flag == 0:
             self.pst_output = self.pst_feature
         else:
-            kernel = torch.tensor(
-                [[0.0, 1.0, 0.0], [1.0, 1.0, 1.0], [0.0, 1.0, 0.0]]
-            ).to(self.device)
             self.pst_output = morph_torch(
                 img=self.img,
                 feature=self.pst_feature,
                 thresh_max=thresh_max,
                 thresh_min=thresh_min,
-                kernel=kernel,
                 device=self.device,
             )
 

@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 from numpy.fft import fft2, fftshift, ifft2
 
-from .utils import cart2pol, denoise, morph
+from .utils import normalize, cart2pol, denoise, morph
 
 
 class PAGE:
@@ -103,7 +103,7 @@ class PAGE:
                 fft2(self.img_denoised)
                 * fftshift(np.exp(-1j * self.page_kernel[:, :, i]))
             )
-            self.page_feature = np.angle(self.img_page)
+            self.page_feature = normalize(np.angle(self.img_page))
             # apply morphological operation if applicable
             if morph_flag == 0:
                 self.page_output[:, :, i] = self.page_feature

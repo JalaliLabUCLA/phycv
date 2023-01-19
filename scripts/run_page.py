@@ -15,7 +15,7 @@ from phycv import PAGE, PAGE_GPU
 def main():
     # indicate image file, height and width of the image, and GPU device (if applicable)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    img_file = "./assets/input_images/jet_engine.jpeg"
+    img_file = "./assets/input_images/wind_rose.png"
     original_image = mpimg.imread(img_file)
 
     output_path = "./output/"
@@ -29,9 +29,9 @@ def main():
     sigma_2 = 0.7
     S1 = 0.8
     S2 = 0.8
-    sigma_LPF = 0.08
-    thresh_min = -1
-    thresh_max = 0.0004
+    sigma_LPF = 0.1
+    thresh_min = 0.0
+    thresh_max = 0.9
     morph_flag = 1
 
     # run PAGE CPU version
@@ -70,19 +70,19 @@ def main():
     f, axes = plt.subplots(1, 2, figsize=(12, 8))
     axes[0].imshow(original_image)
     axes[0].axis("off")
-    axes[0].set_title("original image")
+    axes[0].set_title("Original Image")
     axes[1].imshow(page_edge_cpu)
     axes[1].axis("off")
-    axes[1].set_title("PhyCV Directional Edge Detection (CPU version)")
+    axes[1].set_title("PhyCV Directional Edge Detection")
     plt.savefig(os.path.join(output_path, "PAGE_CPU_demo.jpg"), bbox_inches="tight")
 
     f, axes = plt.subplots(1, 2, figsize=(12, 8))
     axes[0].imshow(original_image)
     axes[0].axis("off")
-    axes[0].set_title("original image")
+    axes[0].set_title("Original Image")
     axes[1].imshow(page_edge_gpu.cpu().numpy())
     axes[1].axis("off")
-    axes[1].set_title("PhyCV Directional Edge Detection (GPU version)")
+    axes[1].set_title("PhyCV Directional Edge Detection")
     plt.savefig(os.path.join(output_path, "PAGE_GPU_demo.jpg"), bbox_inches="tight")
 
 

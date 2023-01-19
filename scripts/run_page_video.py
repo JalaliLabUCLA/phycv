@@ -36,8 +36,8 @@ def main():
     S1 = 0.8
     S2 = 0.8
     sigma_LPF = 0.1
-    thresh_min = -1
-    thresh_max = 0.002
+    thresh_min = 0
+    thresh_max = 0.92
     morph_flag = 1
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
