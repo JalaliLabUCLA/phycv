@@ -19,6 +19,10 @@ def main():
     # indicate the video to be processed
     vid = torchvision.io.read_video("./assets/input_videos/video_nature.mp4")
     print("video loaded!")
+    
+    output_path = "./output/"
+    if not os.path.exists(output_path):
+        os.makedirs(output_path)
 
     # get how many frames are in the video
     # create a empty array to store the PAGE output
@@ -35,9 +39,9 @@ def main():
     sigma_2 = 0.8
     S1 = 0.8
     S2 = 0.8
-    sigma_LPF = 0.1
+    sigma_LPF = 0.15
     thresh_min = 0
-    thresh_max = 0.92
+    thresh_max = 0.94
     morph_flag = 1
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
