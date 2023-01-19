@@ -5,7 +5,7 @@ from torch.fft import fft2, fftshift, ifft2
 from torchvision.io import read_image
 from torchvision.transforms.functional import resize, rgb_to_grayscale
 
-from .utils import normalize, cart2pol_torch, denoise_torch, morph_torch
+from .utils import cart2pol_torch, denoise_torch, morph_torch, normalize
 
 
 class PST_GPU:
@@ -32,8 +32,8 @@ class PST_GPU:
             # directly load the image from the array instead of the file
             if img_array.get_device() == self.device:
                 self.img = img_array
-            else:    
-                self.img = img_array.to(self.device)            
+            else:
+                self.img = img_array.to(self.device)
             # convert to grayscale if it is RGB
             if self.img.dim() == 3 and self.img.shape[0] != 1:
                 self.img = rgb_to_grayscale(self.img)

@@ -5,6 +5,7 @@ import numpy as np
 import torch
 import torch.fft
 
+
 def normalize(x):
     """normalize the input to 0-1
 
@@ -14,7 +15,8 @@ def normalize(x):
     Returns:
         np.ndarray or torch.Tensor
     """
-    return (x - x.min())/(x.max()-x.min())
+    return (x - x.min()) / (x.max() - x.min())
+
 
 def cart2pol(x, y):
     """convert cartesian coordiates to polar coordinates
@@ -104,12 +106,12 @@ def morph(img, feature, thresh_min, thresh_max):
         np.ndarray: digital features (binary edge)
     """
     if len(feature.shape) == 3:
-        quantile_max = np.quantile(feature[::4 ,::4, ::4], thresh_max)
-        quantile_min = np.quantile(feature[::4 ,::4, ::4], thresh_min)
+        quantile_max = np.quantile(feature[::4, ::4, ::4], thresh_max)
+        quantile_min = np.quantile(feature[::4, ::4, ::4], thresh_min)
     elif len(feature.shape) == 2:
         quantile_max = np.quantile(feature[::4, ::4], thresh_max)
         quantile_min = np.quantile(feature[::4, ::4], thresh_min)
-        
+
     digital_feature = np.zeros(feature.shape)
     digital_feature[feature > quantile_max] = 1
     digital_feature[feature < quantile_min] = 1
@@ -131,14 +133,14 @@ def morph_torch(img, feature, thresh_min, thresh_max, device):
     Returns:
         torch.Tensor: digital features (binary edge)
     """
-    
+
     if len(feature.shape) == 3:
-        quantile_max = torch.quantile(feature[::4 ,::4, ::4], thresh_max)
-        quantile_min = torch.quantile(feature[::4 ,::4, ::4], thresh_min)
+        quantile_max = torch.quantile(feature[::4, ::4, ::4], thresh_max)
+        quantile_min = torch.quantile(feature[::4, ::4, ::4], thresh_min)
     elif len(feature.shape) == 2:
         quantile_max = torch.quantile(feature[::4, ::4], thresh_max)
         quantile_min = torch.quantile(feature[::4, ::4], thresh_min)
-    
+
     digital_feature = torch.zeros(feature.shape).to(device)
     digital_feature[feature > quantile_max] = 1
     digital_feature[feature < quantile_min] = 1

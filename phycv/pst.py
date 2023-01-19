@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 from numpy.fft import fft2, fftshift, ifft2
 
-from .utils import normalize, cart2pol, denoise, morph
+from .utils import cart2pol, denoise, morph, normalize
 
 
 class PST:

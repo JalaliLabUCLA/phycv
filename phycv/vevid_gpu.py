@@ -33,7 +33,7 @@ class VEVID_GPU:
             # directly load the image from the array instead of the file
             if img_array.get_device() == self.device:
                 self.img_rgb = img_array
-            else:    
+            else:
                 self.img_rgb = img_array.to(self.device)
             if not self.h and not self.w:
                 self.h = self.img_rgb.shape[-2]
