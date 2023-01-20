@@ -99,12 +99,13 @@ def morph(img, feature, thresh_min, thresh_max):
     Args:
         img (np.ndarray): original image
         feature (np.ndarray): analog feature
-        thresh_min (float): minimum thershold, we keep features < thresh_min
-        thresh_max (float): maximum thershold, we keep features > thresh_max
+        thresh_min (0<= float <=1): minimum thershold, we keep features < quantile(feature, thresh_min)
+        thresh_max (0<= float <=1): maximum thershold, we keep features < quantile(feature, thresh_min)
 
     Returns:
         np.ndarray: digital features (binary edge)
     """
+    # downsample feature to reduce computational time of np.quantile() for large arrays
     if len(feature.shape) == 3:
         quantile_max = np.quantile(feature[::4, ::4, ::4], thresh_max)
         quantile_min = np.quantile(feature[::4, ::4, ::4], thresh_min)
@@ -126,14 +127,14 @@ def morph_torch(img, feature, thresh_min, thresh_max, device):
     Args:
         img (torch.Tensor): original image
         feature (torch.Tensor): analog feature
-        thresh_min (torch.Tensor): minimum thershold, we keep features < thresh_min
-        thresh_max (torch.Tensor): maximum thershold, we keep features > thresh_max
+        thresh_min (0<= float <=1): minimum thershold, we keep features < quantile(feature, thresh_min)
+        thresh_max (0<= float <=1): maximum thershold, we keep features < quantile(feature, thresh_min)
         device (torch.device)
 
     Returns:
         torch.Tensor: digital features (binary edge)
     """
-
+    # downsample feature to reduce computational time of torch.quantile() for large tensors
     if len(feature.shape) == 3:
         quantile_max = torch.quantile(feature[::4, ::4, ::4], thresh_max)
         quantile_min = torch.quantile(feature[::4, ::4, ::4], thresh_min)
