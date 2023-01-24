@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 from numpy.fft import fft2, fftshift, ifft2
 
-from .utils import cart2pol, denoise, morph
+from .utils import cart2pol, denoise, morph, normalize
 
 
 class PST:
@@ -67,7 +67,7 @@ class PST:
         self.img_pst = ifft2(
             fft2(self.img_denoised) * fftshift(np.exp(-1j * self.pst_kernel))
         )
-        self.pst_feature = np.angle(self.img_pst)
+        self.pst_feature = normalize(np.angle(self.img_pst))
         if morph_flag == 0:
             self.pst_output = self.pst_feature
         else:

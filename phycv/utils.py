@@ -1,9 +1,20 @@
 import cv2
 import kornia
-import mahotas as mh
 import numpy as np
 import torch
 import torch.fft
+
+
+def normalize(x):
+    """normalize the input to 0-1
+
+    Args:
+        x (np.ndarray or torch.Tensor): input array or tensor
+
+    Returns:
+        np.ndarray or torch.Tensor
+    """
+    return (x - x.min()) / (x.max() - x.min())
 
 
 def cart2pol(x, y):
@@ -87,59 +98,52 @@ def morph(img, feature, thresh_min, thresh_max):
     Args:
         img (np.ndarray): original image
         feature (np.ndarray): analog feature
-        thresh_min (float): minimum thershold, we keep features < thresh_min
-        thresh_max (float): maximum thershold, we keep features > thresh_max
+        thresh_min (0<= float <=1): minimum thershold, we keep features < quantile(feature, thresh_min)
+        thresh_max (0<= float <=1): maximum thershold, we keep features < quantile(feature, thresh_min)
 
     Returns:
         np.ndarray: digital features (binary edge)
     """
+    # downsample feature to reduce computational time of np.quantile() for large arrays
+    if len(feature.shape) == 3:
+        quantile_max = np.quantile(feature[::4, ::4, ::4], thresh_max)
+        quantile_min = np.quantile(feature[::4, ::4, ::4], thresh_min)
+    elif len(feature.shape) == 2:
+        quantile_max = np.quantile(feature[::4, ::4], thresh_max)
+        quantile_min = np.quantile(feature[::4, ::4], thresh_min)
 
     digital_feature = np.zeros(feature.shape)
-
-    digital_feature[feature > thresh_max] = 1
-    digital_feature[feature < thresh_min] = 1
+    digital_feature[feature > quantile_max] = 1
+    digital_feature[feature < quantile_min] = 1
     digital_feature[img < (np.amax(img) / 20)] = 0
-
-    digital_feature = mh.thin(digital_feature, 1)
-    digital_feature = mh.bwperim(digital_feature, 4)
-    digital_feature = mh.thin(digital_feature, 1)
-    digital_feature = mh.erode(digital_feature, np.ones((1, 1)))
 
     return digital_feature.astype(np.float32)
 
 
-def morph_torch(img, feature, thresh_min, thresh_max, kernel, device):
+def morph_torch(img, feature, thresh_min, thresh_max, device):
     """apply morphological operation to transform analog features to digial features in PyTorch
 
     Args:
         img (torch.Tensor): original image
         feature (torch.Tensor): analog feature
-        thresh_min (torch.Tensor): minimum thershold, we keep features < thresh_min
-        thresh_max (torch.Tensor): maximum thershold, we keep features > thresh_max
+        thresh_min (0<= float <=1): minimum thershold, we keep features < quantile(feature, thresh_min)
+        thresh_max (0<= float <=1): maximum thershold, we keep features < quantile(feature, thresh_min)
         device (torch.device)
 
     Returns:
         torch.Tensor: digital features (binary edge)
     """
+    # downsample feature to reduce computational time of torch.quantile() for large tensors
+    if len(feature.shape) == 3:
+        quantile_max = torch.quantile(feature[::4, ::4, ::4], thresh_max)
+        quantile_min = torch.quantile(feature[::4, ::4, ::4], thresh_min)
+    elif len(feature.shape) == 2:
+        quantile_max = torch.quantile(feature[::4, ::4], thresh_max)
+        quantile_min = torch.quantile(feature[::4, ::4], thresh_min)
+
     digital_feature = torch.zeros(feature.shape).to(device)
-    digital_feature[feature > thresh_max] = 1
-    digital_feature[feature < thresh_min] = 1
+    digital_feature[feature > quantile_max] = 1
+    digital_feature[feature < quantile_min] = 1
     digital_feature[img < (torch.max(img) / 20)] = 0
-
-    # for PST
-    if len(feature.shape) == 2:
-        digital_feature = kornia.utils.image._to_bchw(digital_feature)
-        digital_feature = kornia.morphology.closing(digital_feature, kernel)
-
-    # for PAGE
-    elif len(feature.shape) == 3:
-        digital_feature = torch.permute(digital_feature, (2, 0, 1))
-        digital_feature = kornia.utils.image._to_bchw(
-            torch.unsqueeze(digital_feature, 1)
-        )
-        digital_feature = torch.squeeze(
-            kornia.morphology.closing(digital_feature, kernel)
-        )
-        digital_feature = torch.permute(digital_feature, (1, 2, 0))
 
     return torch.squeeze(digital_feature)

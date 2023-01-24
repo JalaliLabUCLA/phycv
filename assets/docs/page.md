@@ -35,7 +35,7 @@ class PAGE:
 The GPU version of PST significantly accelerates the PST algorithm by using GPU(s). As defined in `phycv/page_gpu.py` , the architect of the `PAGE_GPU` class is similar to the original `PAGE` class with same attributes and methods. The main differences are:
 
 1. You have to indicate the `device` (in a PyTorch fashion) when instantiating the class.
-2. Image IO is done by `torchvision` instead of `opencv`, matrix operation is done by `torch` instead of `numpy`, morphological operation is done by `kornia` instead of `mahotas`
+2. Image IO is done by `torchvision` instead of `opencv`, matrix operation is done by `torch` instead of `numpy`
 3. The `init_kernel` method initializes kernels for different direction bins in parallel by using broadcasting. 
 4. The `apply_kernel` method applies kernels for different direction bins to the image in parallel by using broadcasting. 
 5. The returned result locates on GPU and is in the form of `torch.Tensor`.

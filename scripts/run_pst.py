@@ -26,8 +26,8 @@ def main():
     S = 0.3
     W = 15
     sigma_LPF = 0.15
-    thresh_min = -0.5
-    thresh_max = 0.003
+    thresh_min = 0.05
+    thresh_max = 0.9
     morph_flag = 1
 
     # run PST CPU version
@@ -58,19 +58,19 @@ def main():
     f, axes = plt.subplots(1, 2, figsize=(12, 8))
     axes[0].imshow(original_image)
     axes[0].axis("off")
-    axes[0].set_title("original image")
+    axes[0].set_title("Original Image")
     axes[1].imshow(pst_output_cpu, cmap="gray")
     axes[1].axis("off")
-    axes[1].set_title("PhyCV Edge Detection (CPU version)")
+    axes[1].set_title("PhyCV Edge Detection")
     plt.savefig(os.path.join(output_path, "PST_CPU_demo.jpg"), bbox_inches="tight")
 
     f, axes = plt.subplots(1, 2, figsize=(12, 8))
     axes[0].imshow(original_image)
     axes[0].axis("off")
-    axes[0].set_title("original image")
+    axes[0].set_title("Original Image")
     axes[1].imshow(pst_output_gpu.cpu().numpy(), cmap="gray")
     axes[1].axis("off")
-    axes[1].set_title("PhyCV Edge Detection (GPU version)")
+    axes[1].set_title("PhyCV Edge Detection")
     plt.savefig(os.path.join(output_path, "PST_GPU_demo.jpg"), bbox_inches="tight")
 
 

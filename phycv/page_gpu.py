@@ -5,7 +5,7 @@ from torch.fft import fft2, fftshift, ifft2
 from torchvision.io import read_image
 from torchvision.transforms.functional import resize, rgb_to_grayscale
 
-from .utils import cart2pol_torch, denoise_torch, morph_torch
+from .utils import cart2pol_torch, denoise_torch, morph_torch, normalize
 
 
 class PAGE_GPU:
@@ -35,7 +35,7 @@ class PAGE_GPU:
             # directly load the image from the array instead of the file
             if img_array.get_device() == self.device:
                 self.img = img_array
-            else:    
+            else:
                 self.img = img_array.to(self.device)
             # convert to grayscale if it is RGB
             if self.img.dim() == 3 and self.img.shape[0] != 1:
@@ -140,21 +140,16 @@ class PAGE_GPU:
             * fftshift(torch.exp(-1j * self.page_kernel), dim=(0, 1)),
             dim=(0, 1),
         )
-        self.page_feature = torch.angle(self.img_page)
+        self.page_feature = normalize(torch.angle(self.img_page))
         # apply morphological operation if applicable
         if morph_flag == 0:
             self.page_output = self.page_feature
         else:
-            kernel = torch.tensor(
-                [[0.0, 1.0, 0.0], [1.0, 1.0, 1.0], [0.0, 1.0, 0.0]]
-            ).to(self.device)
-
             self.page_output = morph_torch(
                 img=self.img,
                 feature=self.page_feature,
                 thresh_min=thresh_min,
                 thresh_max=thresh_max,
-                kernel=kernel,
                 device=self.device,
             )
 

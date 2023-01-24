@@ -9,6 +9,10 @@ Welcome to PhyCV ! The First Physics-inspired Computer Vision Python library dev
 
 ### *Release Notes*
 
+* **Version 1.2.2**
+
+  Morphological operations are simplified and improved.
+
 * **Version 1.2.1**
 
   Minor improvements for loading images.
@@ -92,15 +96,13 @@ Similar to PST and PAGE, VEViD a efficient and interpretable low-light and color
 
 In this section, we provide sample results by running the algorithms in PhyCV on images in the `input_image` folder. The parameters to reproduce the results are also attached. 
 
-**Note**: The results from CPU and GPU version may look slightly different for PST and PAGE, because the morphological operation at the end is implemented using different image processing packages ( `mahotas` for CPU version and `kornia` for GPU version). The CPU version will lead to thinner output. You can always set the `morph_flag=0` and add customized morphological operation later on. 
-
 ### 1. Feature detection in the cell image
 
 ```python
 img_file = './assets/input_images/cell.png'
-# PST_GPU Parameters
-phase_strength = 0.5, warp_strength = 20
-sigma_LPF = 0.1, thresh_min = -1, thresh_max = 0.001, morph_flag = 1
+# PST Parameters
+phase_strength = 0.4, warp_strength = 20
+sigma_LPF = 0.1, thresh_min = 0.0, thresh_max = 0.8, morph_flag = 1
 
 ```
 
@@ -112,9 +114,9 @@ sigma_LPF = 0.1, thresh_min = -1, thresh_max = 0.001, morph_flag = 1
 
 ```python
 img_file = './assets/input_images/retina.jpg'
-# PST_GPU Parameters
-phase_strength = 10, warp_strength = 90
-sigma_LPF = 0.05, thresh_min = -1, sthresh_max = 0.008, morph_flag = 1
+# PST Parameters
+phase_strength = 0.5, warp_strength = 30
+sigma_LPF = 0.05, thresh_min = 0.05, sthresh_max = 0.78, morph_flag = 1
 ```
 
 <p align="center">
@@ -125,9 +127,9 @@ sigma_LPF = 0.05, thresh_min = -1, sthresh_max = 0.008, morph_flag = 1
 
 ```python
 img_file = './assets/input_images/palace.png'
-# PST_GPU Parameters
-phase_strength = 0.8, warp_strength = 20
-sigma_LPF = 0.1, thresh_min = -1, thresh_max = 0.002, morph_flag = 1
+# PST Parameters
+phase_strength = 0.4, warp_strength = 20
+sigma_LPF = 0.1, thresh_min = 0.0, thresh_max = 0.75, morph_flag = 1
 ```
 
 <p align="center">
@@ -138,9 +140,9 @@ sigma_LPF = 0.1, thresh_min = -1, thresh_max = 0.002, morph_flag = 1
 
 ```python
 img_file = './asset/input_images/wind_rose.png'
-# PAGE_GPU parameters
+# PAGE parameters
 direction_bins=10, mu_1 = 0, mu_2 = 0.35, sigma_1 = 0.05, sigma_2 = 0.8, S1 = 0.8, S2 = 0.8
-sigma_LPF = 0.1, thresh_min=-1, thresh_max=0.0005, morph_flag = 1
+sigma_LPF = 0.1, thresh_min=0.0, thresh_max=0.9, morph_flag = 1
 ```
 
 <p align="center">
@@ -151,9 +153,9 @@ sigma_LPF = 0.1, thresh_min=-1, thresh_max=0.0005, morph_flag = 1
 
 ```python
 img_file = './assets/input_images/sunflower.jpg'
-# PAGE_GPU parameters
+# PAGE parameters
 direction_bins=10, mu_1 = 0, mu_2 = 0.35, sigma_1 = 0.05, sigma_2 = 0.8, S1 = 0.8, S2 = 0.8
-sigma_LPF = 0.05, thresh_min = -1, thresh_max = 0.0003, morph_flag = 1
+sigma_LPF = 0.1, thresh_min = 0.0, thresh_max = 0.9, morph_flag = 1
 ```
 
 <p align="center">
@@ -164,12 +166,12 @@ sigma_LPF = 0.05, thresh_min = -1, thresh_max = 0.0003, morph_flag = 1
 
 ```python
 img_file = './asset/input_images/jet_engine.jpeg'
-# PST_GPU Parameters
+# PST Parameters
 phase_strength = 0.3, warp_strength = 15
-sigma_LPF = 0.15, thresh_min = -0.5, thresh_max = 0.003, morph_flag = 1
-# PAGE_GPU Parameters
-direction_bins=10, mu_1=0, mu_2 = 0.35, sigma_1 = 0.05, sigma_2 = 0.7, S1 = 0.8 ,S2 = 0.8
-sigma_LPF = 0.08, thresh_min = -1, thresh_max = 0.0004, morph_flag = 1
+sigma_LPF = 0.15, thresh_min = 0.0, thresh_max = 0.85, morph_flag = 1
+# PAGE Parameters
+direction_bins=10, mu_1=0, mu_2 = 0.35, sigma_1 = 0.05, sigma_2 = 0.8, S1 = 0.8 ,S2 = 0.8
+sigma_LPF = 0.15, thresh_min = 0.0, thresh_max = 0.85, morph_flag = 1
 ```
 
 <p align="center">
@@ -181,11 +183,11 @@ sigma_LPF = 0.08, thresh_min = -1, thresh_max = 0.0004, morph_flag = 1
 ```python
 img_file = './assets/input_images/barbara.jpeg'
 # PST Parameters
-phase_strength = 0.8, warp_strength = 15
-sigma_LPF = 0.15, thresh_min = -0.5, thresh_max = 0.003, morph_flag = 1
+phase_strength = 0.3, warp_strength = 15
+sigma_LPF = 0.1, thresh_min = 0.0, thresh_max = 0.8, morph_flag = 1
 # PAGE Parameters
 direction_bins = 30, mu_1 = 0, mu_2 = 0.2, sigma_1 = 0.05, sigma_2 = 0.6, S1 = 0.5, S2 = 0.5
-sigma_LPF = 0.1, thresh_min=-0.5, thresh_max=0.0001, morph_flag = 1
+sigma_LPF = 0.1, thresh_min=0.0, thresh_max=0.92, morph_flag = 1
 ```
 
 <p align="center">

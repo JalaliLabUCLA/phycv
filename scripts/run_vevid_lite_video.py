@@ -20,6 +20,10 @@ def main():
     vid = torchvision.io.read_video("./assets/input_videos/video_building.mp4")
     print("video loaded!")
 
+    output_path = "./output/"
+    if not os.path.exists(output_path):
+        os.makedirs(output_path)
+
     # get how many frames are in the video
     # create a empty array to store the VEViD output
     vid_frames = vid[0]
