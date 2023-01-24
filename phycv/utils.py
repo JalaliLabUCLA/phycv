@@ -1,6 +1,5 @@
 import cv2
 import kornia
-import mahotas as mh
 import numpy as np
 import torch
 import torch.fft

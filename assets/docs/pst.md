@@ -32,7 +32,7 @@ class PST:
 The GPU version of PST significantly accelerates the PST algorithm by using GPU(s). As defined in `phycv/pst_gpu.py` , the architect of the `PST_GPU` class is similar to the original `PST` class with same attributes and methods. The main differences are:
 
 1. You have to indicate the `device` (in a PyTorch fashion) when instantiating the class.
-2. Image IO is done by `torchvision` instead of `opencv`, matrix operation is done by `torch` instead of `numpy`, morphological operation is done by `kornia` instead of `mahotas`
+2. Image IO is done by `torchvision` instead of `opencv`, matrix operation is done by `torch` instead of `numpy`.
 3. The returned result locates on GPU and is in the form of `torch.Tensor`.
 
 ### **Examples**

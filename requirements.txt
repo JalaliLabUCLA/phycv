@@ -2,7 +2,6 @@ av
 imageio
 imageio-ffmpeg
 kornia
-mahotas
 matplotlib
 numpy
 opencv-python
