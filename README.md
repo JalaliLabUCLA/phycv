@@ -5,33 +5,7 @@
 [![Wikipedia](https://img.shields.io/badge/Wikipedia-%23000000.svg?style=for-the-badge&logo=wikipedia&logoColor=white)](https://en.wikipedia.org/wiki/PhyCV)
 [![YouTube](https://img.shields.io/badge/YouTube-%23FF0000.svg?style=for-the-badge&logo=YouTube&logoColor=white)](https://www.youtube.com/playlist?list=PLj--iTBXPaTWABQstUFA6l6_Rf3uiZq9T)
 
-Welcome to PhyCV ! The First Physics-inspired Computer Vision Python library developed by Jalali-Lab @ UCLA.
-
-### *Release Notes*
-
-* **Version 1.2.2**
-
-  Morphological operations are simplified and improved.
-
-* **Version 1.2.1**
-
-  Minor improvements for loading images.
-
-* **Version 1.2.0**
-
-  We release VEViD, an efficient algorithm for both low-light enhancement and color enhancement! We also significantly improved the document and code!
-
-* **Version 1.1.1**
-
-  Fix minor bugs in `page_create_edge` .
-
-* **Version 1.1.0**
-
-  The `load_img` method now supports loading images from both an image files and image arrays.
-
-* **Version 1.0.0**
-  
-  The first release of PhyCV is available!
+Welcome to PhyCV ! The First Physics-inspired Computer Vision Python library developed by Jalali-Lab @ UCLA. See the change log of each version [here](./assets/docs/change_log.md)
 
 ## Contents
 
@@ -50,6 +24,8 @@ Welcome to PhyCV ! The First Physics-inspired Computer Vision Python library dev
 * [Sample Results](#sample-results)
 
 * [Reference](#reference)
+
+* [Citation](#citation)
 
 ## Introduction
 
@@ -259,3 +235,14 @@ b = 0.2, G = 1.5
 [10] Phase-Stretch Adaptive Gradient-Field Extractor (PAGE). MacPhee et al. arXiv preprint arXiv:2202.03570, 2022
 
 [11] VEViD: Vision Enhancement via Virtual diffraction and coherent Detection. Jalali et al. eLight, 2022
+
+## Citation
+
+If you find PhyCV useful in your research, please star :star: this repository and consider citing :pencil::
+```
+@article{zhou2023phycv,
+  title={PhyCV: The First Physics-inspired Computer Vision Library},
+  author={Zhou, Yiming and MacPhee, Callen and Suthar, Madhuri and Jalali, Bahram},
+  journal={arXiv preprint arXiv:2301.12531},
+  year={2023}
+}
