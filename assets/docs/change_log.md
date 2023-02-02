@@ -1,5 +1,9 @@
 ## Change Log
 
+* **Version 1.2.3**
+
+  Fix the opencv import bug in `pst_gpu.py` and `page_gpu.py`.   
+
 * **Version 1.2.2**
 
   Morphological operations are simplified and improved.
