@@ -1,7 +1,7 @@
 <p align="center">
   <img src="assets/misc/phycv_badge.png">
 </p>
-[[![arXiv](https://img.shields.io/badge/arXiv-1234.56789-f9f107.svg)](https://arxiv.org/abs/2301.12531)]
+[[![arXiv](https://img.shields.io/badge/arXiv-1234.56789-f9f107.svg)](https://arxiv.org/abs/2301.12531)
 [![YouTube](https://img.shields.io/badge/YouTube-%23FF0000.svg?style=for-the-badge&logo=YouTube&logoColor=white)](https://www.youtube.com/playlist?list=PLj--iTBXPaTWABQstUFA6l6_Rf3uiZq9T)
 [![Wikipedia](https://img.shields.io/badge/Wikipedia-%23000000.svg?style=for-the-badge&logo=wikipedia&logoColor=white)](https://en.wikipedia.org/wiki/PhyCV)
 
