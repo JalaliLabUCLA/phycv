@@ -1,9 +1,9 @@
 <p align="center">
   <img src="assets/misc/phycv_badge.png">
 </p>
-
-[![Wikipedia](https://img.shields.io/badge/Wikipedia-%23000000.svg?style=for-the-badge&logo=wikipedia&logoColor=white)](https://en.wikipedia.org/wiki/PhyCV)
+[[![arXiv](https://img.shields.io/badge/arXiv-1234.56789-f9f107.svg)](https://arxiv.org/abs/2301.12531)]
 [![YouTube](https://img.shields.io/badge/YouTube-%23FF0000.svg?style=for-the-badge&logo=YouTube&logoColor=white)](https://www.youtube.com/playlist?list=PLj--iTBXPaTWABQstUFA6l6_Rf3uiZq9T)
+[![Wikipedia](https://img.shields.io/badge/Wikipedia-%23000000.svg?style=for-the-badge&logo=wikipedia&logoColor=white)](https://en.wikipedia.org/wiki/PhyCV)
 
 Welcome to PhyCV ! The First Physics-inspired Computer Vision Python library developed by [Jalali-Lab](https://photonics.ucla.edu/) @ UCLA. This repo is maintained by [Yiming Zhou](https://yiming0416.github.io/).
 
@@ -240,7 +240,7 @@ b = 0.2, G = 1.5
 
 ## Citation
 
-If you find PhyCV useful in your research, please star :star: this repository and consider citing :pencil::
+If you find PhyCV useful in your research, please star :star: this repository and consider citing the following [preprint](https://arxiv.org/abs/2301.12531):
 ```
 @article{zhou2023phycv,
   title={PhyCV: The First Physics-inspired Computer Vision Library},
