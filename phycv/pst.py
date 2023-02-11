@@ -25,6 +25,7 @@ class PST:
         """
         if img_array is not None:
             self.img = img_array
+            self.h, self.w = self.img.shape[:2]
         else:
             self.img = cv2.imread(img_file)
             if not self.h and not self.w:
