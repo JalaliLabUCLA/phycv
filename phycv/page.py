@@ -28,6 +28,8 @@ class PAGE:
         if img_array is not None:
             # directly load the image from numpy array
             self.img = img_array
+            self.h = img_array.shape[0]
+            self.w = img_array.shape[1]
         else:
             # load the image from the image file
             self.img = cv2.imread(img_file)
