@@ -26,6 +26,8 @@ class VEVID:
         if img_array is not None:
             # directly load the image from numpy array
             self.img_bgr = img_array
+            self.h = img_array.shape[0]
+            self.w = img_array.shape[1]
         else:
             # load the image from the image file
             self.img_bgr = cv2.imread(img_file)
