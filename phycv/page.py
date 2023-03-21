@@ -91,8 +91,6 @@ class PAGE:
 
         # denoise on the loaded image
         self.img_denoised = denoise(img=self.img, rho=self.RHO, sigma_LPF=sigma_LPF)
-        self.page_output = np.zeros([self.h, self.w, self.direction_bins])
-
         # apply the page kernel
         self.img_page = ifft2(
             fft2(self.img_denoised)[..., None]
