@@ -1,5 +1,9 @@
 ## Change Log
 
+* **Version 1.2.4**
+
+  Improve `PAGE` implementation.
+
 * **Version 1.2.3**
 
   Fix the opencv import bug in `pst_gpu.py` and `page_gpu.py`.   

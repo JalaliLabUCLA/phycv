@@ -91,8 +91,8 @@ class PAGE_GPU:
         """
 
         # set the frequency grid
-        u = torch.linspace(-0.5, 0.5, self.h, device=self.device).float()
-        v = torch.linspace(-0.5, 0.5, self.w, device=self.device).float()
+        u = torch.linspace(-0.5, 0.5, self.h, device=self.device).double()
+        v = torch.linspace(-0.5, 0.5, self.w, device=self.device).double()
         [U, V] = torch.meshgrid(u, v, indexing="ij")
         [self.THETA, self.RHO] = cart2pol_torch(U, V)
 
@@ -110,16 +110,13 @@ class PAGE_GPU:
         Phi_1s = torch.exp(-0.5 * ((torch.abs(Uprimes) - mu_1) / sigma_1) ** 2) / (
             1 * np.sqrt(2 * np.pi) * sigma_1
         )
-        Phi_1s = (
-            Phi_1s / torch.max(Phi_1s.view(-1, self.direction_bins), dim=0)[0]
-        ) * S1
+        Phi_1s = S1 * Phi_1s / torch.amax(Phi_1s, dim=(0, 1), keepdims=True)
 
         Phi_2s = torch.exp(
             -0.5 * ((torch.log(torch.abs(Vprimes)) - mu_2) / sigma_2) ** 2
         ) / (abs(Vprimes) * np.sqrt(2 * np.pi) * sigma_2)
-        Phi_2s = (
-            Phi_2s / torch.max(Phi_2s.view(-1, self.direction_bins), dim=0)[0]
-        ) * S2
+        Phi_2s = S2 * Phi_2s / torch.amax(Phi_2s, dim=(0, 1), keepdims=True)
+
         self.page_kernel = Phi_1s * Phi_2s
 
     def apply_kernel(self, sigma_LPF, thresh_min, thresh_max, morph_flag):

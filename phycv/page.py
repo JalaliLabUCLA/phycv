@@ -63,29 +63,22 @@ class PAGE:
         min_direction = np.pi / 180
         direction_span = np.pi / self.direction_bins
         directions = np.arange(min_direction, np.pi, direction_span)
+        tetavs = directions[None, ...]
+        Us, Vs = U[..., None], V[..., None]
+        Uprimes = Us * np.cos(tetavs) + Vs * np.sin(tetavs)
+        Vprimes = -Us * np.sin(tetavs) + Vs * np.cos(tetavs)
 
-        # create PAGE kernels channel by channel
-        self.page_kernel = np.zeros([self.h, self.w, self.direction_bins])
-        for i in range(self.direction_bins):
-            tetav = directions[i]
-            # Project onto new directionality basis for PAGE filter creation
-            Uprime = U * np.cos(tetav) + V * np.sin(tetav)
-            Vprime = -U * np.sin(tetav) + V * np.cos(tetav)
+        Phi_1s = np.exp(-0.5 * ((np.abs(Uprimes) - mu_1) / sigma_1) ** 2) / (
+            1 * np.sqrt(2 * np.pi) * sigma_1
+        )
+        Phi_1s = S1 * Phi_1s / np.amax(Phi_1s, axis=(0, 1), keepdims=True)
 
-            # Create Normal component of PAGE filter
-            Phi_1 = np.exp(-0.5 * ((abs(Uprime) - mu_1) / sigma_1) ** 2) / (
-                1 * np.sqrt(2 * np.pi) * sigma_1
-            )
-            Phi_1 = (Phi_1 / np.max(Phi_1[:])) * S1
+        Phi_2s = np.exp(-0.5 * ((np.log(np.abs(Vprimes)) - mu_2) / sigma_2) ** 2) / (
+            abs(Vprimes) * np.sqrt(2 * np.pi) * sigma_2
+        )
+        Phi_2s = S2 * Phi_2s / np.amax(Phi_2s, axis=(0, 1), keepdims=True)
 
-            # Create Log-Normal component of PAGE filter
-            Phi_2 = np.exp(-0.5 * ((np.log(abs(Vprime)) - mu_2) / sigma_2) ** 2) / (
-                abs(Vprime) * np.sqrt(2 * np.pi) * sigma_2
-            )
-            Phi_2 = (Phi_2 / np.max(Phi_2[:])) * S2
-
-            # Add overall directional filter to PAGE filter array
-            self.page_kernel[:, :, i] = Phi_1 * Phi_2
+        self.page_kernel = Phi_1s * Phi_2s
 
     def apply_kernel(self, sigma_LPF, thresh_min, thresh_max, morph_flag):
         """apply the phase kernel onto the image
@@ -99,23 +92,24 @@ class PAGE:
         # denoise on the loaded image
         self.img_denoised = denoise(img=self.img, rho=self.RHO, sigma_LPF=sigma_LPF)
         self.page_output = np.zeros([self.h, self.w, self.direction_bins])
-        # apply the kernel channel by channel
-        for i in range(self.direction_bins):
-            self.img_page = ifft2(
-                fft2(self.img_denoised)
-                * fftshift(np.exp(-1j * self.page_kernel[:, :, i]))
+
+        # apply the page kernel
+        self.img_page = ifft2(
+            fft2(self.img_denoised)[..., None]
+            * fftshift(np.exp(-1j * self.page_kernel), axes=(0, 1)),
+            axes=(0, 1),
+        )
+        self.page_feature = normalize(np.angle(self.img_page))
+        # apply morphological operation if applicable
+        if morph_flag == 0:
+            self.page_output = self.page_feature
+        else:
+            self.page_output = morph(
+                img=self.img,
+                feature=self.page_feature,
+                thresh_min=thresh_min,
+                thresh_max=thresh_max,
             )
-            self.page_feature = normalize(np.angle(self.img_page))
-            # apply morphological operation if applicable
-            if morph_flag == 0:
-                self.page_output[:, :, i] = self.page_feature
-            else:
-                self.page_output[:, :, i] = morph(
-                    img=self.img,
-                    feature=self.page_feature,
-                    thresh_max=thresh_max,
-                    thresh_min=thresh_min,
-                )
 
     def create_page_edge(self):
         """create results which color-coded directional edges"""
