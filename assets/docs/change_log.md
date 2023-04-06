@@ -1,5 +1,9 @@
 ## Change Log
 
+* **Version 1.2.5**
+
+  Fix minor bugs in  `PST`.
+
 * **Version 1.2.4**
 
   Improve `PAGE` implementation. Pin `PyTorch` version to 1.13
