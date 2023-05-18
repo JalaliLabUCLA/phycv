@@ -7,7 +7,9 @@ import os
 
 import matplotlib.image as mpimg
 import matplotlib.pyplot as plt
+import numpy as np
 import torch
+from PIL import Image
 
 from phycv import PST, PST_GPU
 
@@ -53,6 +55,7 @@ def main():
         thresh_max,
         morph_flag,
     )
+    pst_output_gpu = pst_output_gpu.cpu().numpy()
 
     # visualize the results
     f, axes = plt.subplots(1, 2, figsize=(12, 8))
@@ -62,16 +65,20 @@ def main():
     axes[1].imshow(pst_output_cpu, cmap="gray")
     axes[1].axis("off")
     axes[1].set_title("PhyCV Edge Detection")
-    plt.savefig(os.path.join(output_path, "PST_CPU_demo.jpg"), bbox_inches="tight")
+    plt.savefig(os.path.join(output_path, "PST_CPU_compare.jpg"), bbox_inches="tight")
+    pst_cpu_result = Image.fromarray((pst_output_cpu * 255).astype(np.uint8))
+    pst_cpu_result.save(os.path.join(output_path, "PST_CPU_output.jpg"))
 
     f, axes = plt.subplots(1, 2, figsize=(12, 8))
     axes[0].imshow(original_image)
     axes[0].axis("off")
     axes[0].set_title("Original Image")
-    axes[1].imshow(pst_output_gpu.cpu().numpy(), cmap="gray")
+    axes[1].imshow(pst_output_gpu, cmap="gray")
     axes[1].axis("off")
     axes[1].set_title("PhyCV Edge Detection")
-    plt.savefig(os.path.join(output_path, "PST_GPU_demo.jpg"), bbox_inches="tight")
+    plt.savefig(os.path.join(output_path, "PST_GPU_compare.jpg"), bbox_inches="tight")
+    pst_gpu_result = Image.fromarray((pst_output_gpu * 255).astype(np.uint8))
+    pst_gpu_result.save(os.path.join(output_path, "PST_GPU_output.jpg"))
 
 
 if __name__ == "__main__":

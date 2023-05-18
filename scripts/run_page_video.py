@@ -19,7 +19,7 @@ def main():
     # indicate the video to be processed
     vid = torchvision.io.read_video("./assets/input_videos/video_nature.mp4")
     print("video loaded!")
-    
+
     output_path = "./output/"
     if not os.path.exists(output_path):
         os.makedirs(output_path)

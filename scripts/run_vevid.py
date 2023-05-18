@@ -10,6 +10,7 @@ import matplotlib.image as mpimg
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
+from PIL import Image
 
 from phycv import VEVID, VEVID_GPU
 
@@ -37,6 +38,9 @@ def main():
     # run VEVID GPU version
     vevid_gpu = VEVID_GPU(device=device)
     vevid_output_gpu = vevid_gpu.run(img_file=img_file, S=S, T=T, b=b, G=G)
+    vevid_output_gpu = (
+        (np.transpose(vevid_output_gpu.cpu().numpy(), (1, 2, 0))) * 255
+    ).astype(np.uint8)
 
     # visualize the results
     f, axes = plt.subplots(1, 2, figsize=(12, 8))
@@ -46,16 +50,21 @@ def main():
     axes[1].imshow(vevid_output_cpu)
     axes[1].axis("off")
     axes[1].set_title("PhyCV Low-Light Enhancement (CPU version)")
-    plt.savefig(os.path.join(output_path, "VEViD_CPU_demo.jpg"), bbox_inches="tight")
+    plt.savefig(os.path.join(output_path, "VEViD_CPU_compare.jpg"), bbox_inches="tight")
+    vevid_cpu_result = Image.fromarray(vevid_output_cpu)
+    vevid_cpu_result.save(os.path.join(output_path, "VEViD_CPU_output.jpg"))
 
     f, axes = plt.subplots(1, 2, figsize=(12, 8))
     axes[0].imshow(original_image)
     axes[0].axis("off")
     axes[0].set_title("original image")
-    axes[1].imshow(np.transpose(vevid_output_gpu.cpu().numpy(), (1, 2, 0)))
+    axes[1].imshow(vevid_output_gpu)
     axes[1].axis("off")
     axes[1].set_title("PhyCV Low-Light Enhancement (GPU version)")
-    plt.savefig(os.path.join(output_path, "VEViD_GPU_demo.jpg"), bbox_inches="tight")
+    plt.savefig(os.path.join(output_path, "VEViD_GPU_compare.jpg"), bbox_inches="tight")
+
+    vevid_gpu_result = Image.fromarray(vevid_output_gpu)
+    vevid_gpu_result.save(os.path.join(output_path, "VEViD_GPU_output.jpg"))
 
 
 if __name__ == "__main__":
