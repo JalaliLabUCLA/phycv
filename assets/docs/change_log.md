@@ -2,6 +2,10 @@
 
 * **Version 1.2.5**
 
+  Minor refactoring in `VEViD`.
+
+* **Version 1.2.5**
+
   Fix minor bugs in  `PST`.
 
 * **Version 1.2.4**
