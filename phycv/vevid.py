@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 from numpy.fft import fft2, fftshift, ifft2
 
-from .utils import cart2pol
+from .utils import cart2pol, normalize
 
 
 class VEVID:
@@ -75,13 +75,9 @@ class VEVID:
             vevid_input_f = fft2(vevid_input + b)
             img_vevid = ifft2(vevid_input_f * fftshift(np.exp(-1j * self.vevid_kernel)))
             vevid_phase = np.arctan2(G * np.imag(img_vevid), vevid_input)
-        vevid_phase_norm = (vevid_phase - vevid_phase.min()) / (
-            vevid_phase.max() - vevid_phase.min()
-        )
+        vevid_phase_norm = normalize(vevid_phase)
         self.img_hsv[:, :, channel_idx] = vevid_phase_norm
-        self.img_hsv = cv2.normalize(
-            self.img_hsv, None, 0, 255, cv2.NORM_MINMAX
-        ).astype(np.uint8)
+        self.img_hsv = (self.img_hsv * 255).astype(np.uint8)
         self.vevid_output = cv2.cvtColor(self.img_hsv, cv2.COLOR_HSV2RGB)
 
     def run(self, img_file, S, T, b, G, color=False):

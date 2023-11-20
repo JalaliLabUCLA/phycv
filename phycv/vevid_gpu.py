@@ -6,7 +6,7 @@ from torch.fft import fft2, fftshift, ifft2
 from torchvision.io import read_image
 from torchvision.transforms.functional import resize, rgb_to_grayscale
 
-from .utils import cart2pol_torch
+from .utils import cart2pol_torch, normalize
 
 
 class VEVID_GPU:
@@ -100,9 +100,8 @@ class VEVID_GPU:
                 vevid_input_f * fftshift(torch.exp(-1j * self.vevid_kernel))
             )
             vevid_phase = torch.atan2(G * torch.imag(img_vevid), vevid_input)
-        vevid_phase_norm = (vevid_phase - vevid_phase.min()) / (
-            vevid_phase.max() - vevid_phase.min()
-        )
+        
+        vevid_phase_norm = normalize(vevid_phase)
         self.img_hsv[channel_idx, :, :] = vevid_phase_norm
         self.vevid_output = hsv_to_rgb(self.img_hsv)
 
