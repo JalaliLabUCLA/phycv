@@ -43,7 +43,7 @@ PhyCV is a Physics-inspired Computer Vision Python library. PhyCV has a new clas
 
 ## Installation
 
-The GPU versions depend on `PyTorch` , make sure that you have `CUDA` setup before the installation. 
+The GPU versions depend on `PyTorch` and `torchvision`. Please follow the instructions on [PyTorch Official Website](https://pytorch.org/) to install the correct version of `CUDA ToolKit` and `PyTorch` according to your system setup.
 
 **From pip**
 
