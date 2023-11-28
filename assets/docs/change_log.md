@@ -1,8 +1,8 @@
 ## Change Log
 
-* **Version 1.2.5**
+* **Version 1.2.6**
 
-  Minor refactoring in `VEViD`.
+  Minor refactoring in `VEViD` and update requirements.
 
 * **Version 1.2.5**
 
