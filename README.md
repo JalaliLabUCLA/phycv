@@ -6,7 +6,7 @@
 
 <a href="https://colab.research.google.com/drive/1_4OASJRSkwc6u1kq8mqMNfqpo3h_0pGU?usp=sharing"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="google colab logo"></a> 
 [![PyPI](https://img.shields.io/pypi/v/phycv)](https://pypi.org/project/phycv/)
-[![Citation](https://img.shields.io/badge/Citation-bibtex-green)](https://github.com/JalaliLabUCLA/phycv#citation)
+[![Citation](https://img.shields.io/badge/Citation-bibtex-green)](https://arxiv.org/abs/2301.12531)
 
 [![YouTube](https://img.shields.io/badge/YouTube-%23FF0000.svg?style=for-the-badge&logo=YouTube&logoColor=white)](https://www.youtube.com/playlist?list=PLj--iTBXPaTWABQstUFA6l6_Rf3uiZq9T)
 [![Wikipedia](https://img.shields.io/badge/Wikipedia-%23000000.svg?style=for-the-badge&logo=wikipedia&logoColor=white)](https://en.wikipedia.org/wiki/PhyCV)
