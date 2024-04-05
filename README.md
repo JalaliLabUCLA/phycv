@@ -11,9 +11,9 @@
 [![YouTube](https://img.shields.io/badge/YouTube-%23FF0000.svg?style=for-the-badge&logo=YouTube&logoColor=white)](https://www.youtube.com/playlist?list=PLj--iTBXPaTWABQstUFA6l6_Rf3uiZq9T)
 [![Wikipedia](https://img.shields.io/badge/Wikipedia-%23000000.svg?style=for-the-badge&logo=wikipedia&logoColor=white)](https://en.wikipedia.org/wiki/PhyCV)
 
-Welcome to PhyCV ! The First Physics-inspired Computer Vision Python library developed by [Jalali-Lab](https://photonics.ucla.edu/) @ UCLA. This repo is maintained by [Yiming Zhou](https://yiming0416.github.io/).
+Welcome to PhyCV ! The First Physics-inspired Computer Vision Python library developed by [Jalali-Lab](https://photonics.ucla.edu/) @ UCLA. This repo is maintained by [Yiming Zhou](https://yiming0416.github.io/). See the release notes [here](./assets/docs/change_log.md).
 
-Please see the release notes of all previous versions [here](./assets/docs/change_log.md).
+We released the C++ version of PhyCV with CUDA acceleration. Check out the PhyCV-CUDA repo [here](https://github.com/JalaliLabUCLA/phycv-cuda)!
 
 ## Contents
 
